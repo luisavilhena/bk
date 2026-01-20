@@ -1,45 +1,77 @@
-.home-special-img {
-	position: relative;
-	padding-bottom: 350px;
-	p {
-		z-index: 1;
+.home,
+.page-template-page-tempo {
+	.header__content {
+		background-color: transparent;
 	}
-	figure {
-		z-index: 0;
+	#logo-anchor {
+		svg {
+			.cls-2 {
+				fill: #ffffff;
+			}
+		}
 	}
-	img {
-		max-height: 700px;
-		position: absolute;
-		right: 0;
-		top: auto;
-		bottom: 0px;
-		// height: 55vh;
-		width: auto;
-		z-index: 0;
-	}
-}
-@media screen and (max-width: @screen-sm) {
-	.home-special-img {
-		padding-bottom: 130px;
-		img {
+	.home-content {
+		a,
+		img{ 
+			height: 100vh;
+			width: 100%;
+			display: block;
+			object-fit: cover;
+		}
+		figure {
+			margin-bottom: 0;
+		}
+		figure {
+			position: relative;
+			figcaption {
+				display: none;
+				bottom: 0;
+				width: 100%;
+				box-sizing: border-box;
+				justify-content: space-between;
+				padding: 13px 20px;
+				margin: 0;
+				background-color: @grey;
+				color: white;
 
+				h2, span {
+					font-size: 16px;
+					font-weight: 400;
+					font-family: 'Inter', sans-serif;
+				}
+			}
+	
+			&:hover figcaption {
+				display: flex;
+				position: absolute;
+				
+			}
+		}
+		@media screen and (max-width: @screen-md-2) {
+			figure {
+				figcaption {
+					display: flex;
+					position: absolute;
+				}
+			}
+			
 		}
 	}
-}
-.home-special-img--2 {
-	position: relative;
-	img {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		height: 85vh;
-		width: auto;
+	
+	ul#main-menu li a  {
+		color: white
 	}
-}
-@media screen and (max-width:@screen-lg-2) {
-	.home-special-img--2 {
-		img {
-			display: none;
-		}
+	header .header-2 {
+		border-color: white;
 	}
+	ul#main-menu a:hover::before {
+		background-color: white;
+	}
+	.menu-open 	#mobile-menu-trigger span {
+		background-color: white;
+	}
+	#mobile-menu-trigger span {
+		background-color: white;
+	}
+
 }

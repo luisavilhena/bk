@@ -10,7 +10,7 @@
 		padding-bottom: 0px;
 		margin-top: 0px;
 		margin-bottom: 0;
-		font-family: 'gilroy', sans-serif;
+		font-family: 'Inter', sans-serif;
 		text-transform: uppercase;
 		cursor: pointer;
 		font-weight: 300;
@@ -25,8 +25,11 @@
 		}
 	}
 	#menu-filter:hover {
-		font-weight: 600;
+		font-weight: 900;
 	}
+}
+.only-mobile {
+	display: none;
 }
 
 
@@ -44,60 +47,60 @@ ul#main-menu {
 	}
 	.current-menu-item {
 		a {
-			font-weight: 600;
+			font-weight: 900;
 		}
 	}
 	li {
 		a {
 			font-size: 16px;
-			color: @black;
+			color: @dark-grey;
 		}
 	}
 
 	> li {
 		position: relative;
 		display: flex;
-		padding-right: 5px;
-		margin-right: 20px;
+		padding: 0px 7px 7px 0;
+		margin-right: 30px;
 		padding-bottom: 0px;
 		margin-top: 0px;
 		margin-bottom: 0;
 		> a {
 			position: relative;
 			text-decoration: none;
-			font-family: 'gilroy', sans-serif;
+			font-family: 'Inter', sans-serif;
 			text-transform: uppercase;
 			font-size: 16px;
 			white-space: nowrap;
 			font-weight: 300;
 			transition: font-weight 0.3s ease;
 		}
+		a::after {
+			content: attr(data-text);
+			font-weight: 900;
+			height: 0;
+			overflow: hidden;
+			visibility: hidden;
+			display: block;
+		}
 		>ul {
 			display: none;
 		}
 	}
-	li:nth-child(1) {
-		width: 79px;
-	}
-	li:nth-child(2) {
-		width: 51px;
-	}
-	li:nth-child(3) {
-		width: 42px;
-	}
-	li:nth-child(4) {
-		width: 80px;
-	}
-	li:nth-child(5) {
-		width: 21px;
-	}
-	li:nth-child(6) {
-		width: 20px;
-	}
+			a:hover::before,
+		.current_page_item a::before {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 7px;
+			display: block;
+			bottom: -4px;
+			background-color: @dark-grey;		
+		}
 	
 	> li:hover {
 		a {
-			font-weight: 600;
+			font-weight: 900;
 			font-size: 16px;
 		}
 	}
@@ -109,18 +112,6 @@ ul#main-menu {
 	display: none;
 }
 
-// @media screen and (max-width: @screen-lg) {
-// 	ul#main-menu {
-// 		> li {
-// 			padding-right: 30px;
-// 		}
-// 		> li:nth-of-type(2) {
-// 			&:after {
-// 				right: 7px;
-// 			}
-// 		}
-// 	}
-// }
 
 @media screen and (max-width: 1080px) {
 	ul#main-menu {
@@ -170,6 +161,7 @@ ul#main-menu {
 		order: 1;
 		left: 15px;
 	    display: flex;
+		padding: 0;
 
 		background-color: transparent;
 		border: none;
@@ -183,21 +175,66 @@ ul#main-menu {
 	    display: block;
 	    margin-bottom: 6px;
 	    height: 2px;
-	    width: 26px;
+	    width: 24px;
 	    opacity: 1;
 	    transform: rotate(0deg);
-	    background-color: black;
+	    background-color: @dark-grey;
 	  }
 	}
-	#search-form {
-		display: none;
-	}
+
 	.menu-open {
+		background-color: @grey;
+		#logo-anchor {
+			svg {
+				.cls-2 {
+					fill: #ffffff;
+				}
+			}
+		}
+		.header__content {
+			background-color: @grey;
+			#mobile-menu-trigger span {
+				background-color: #ffffff;
+			}
+		}
+		
 		.header-menu-container {
 			display: flex;
 			flex-direction: column;
 			align-items: flex-end;
-			height: 100vh;
+			height: calc(100vh -  97px);
+			background-color: @grey;
+			top: 97px;
+			.menu-header-container {
+				width: 100%;
+				ul#main-menu {
+					padding: 0;
+					li {
+						padding: 0;
+						margin: 0;
+						a {
+							border-top: 1px solid #ffffff;
+							padding: 15px 15px;
+							color: white;
+							width: 100%;
+							text-align: right;
+							font-size: 21px;
+							&::before {
+								display: none;
+							}
+						}
+					}				
+				}
+	
+			}
+			.only-mobile {
+				display: flex;
+				justify-content: space-between;
+				width: 100%;
+				padding: 20px 20px 0 20px;
+				box-sizing: border-box;
+			}
+			
 		}
 		#menu-filter {
 			display: none;
@@ -205,10 +242,11 @@ ul#main-menu {
 	  	#mobile-menu-trigger {
 			right: 41.5%;
 			transition: right 0.6s;
+		
 			div {
 				margin-top: 4px;
 				span {
-					margin-bottom: -1px;
+					margin-bottom: -2px;
 				}
 				> span:nth-child(1){
 					transform: rotate(45deg);
@@ -224,12 +262,6 @@ ul#main-menu {
 					transition: transform 0.6s;
   	    		}
   	  		}
-		}
-		#search-form {
-			display: block;
-			margin-bottom: 350px;
-			right: 50%;
-            transform: translate(-50%, -50%);
 		}
 		.menu-menu-principal-container {
 			display: flex;

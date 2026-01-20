@@ -4,63 +4,44 @@
 	justify-content: flex-start;
 	padding: 0;
 	width: 100%;
+	gap: 30px;
 
 	.project-list__item {
-		width: 18%;
-		margin-right: 2.4%;
+		width: calc((100% - 90px) / 4);
 		text-decoration: none;
+		position: relative;
 		img {
+			filter: grayscale(100%);
 			width: 100%;
 		}
-		a {
-			span {
-				background-color: transparent;
-				transition: background 0.3s;
+		.project-list__item-description {
+			position: absolute;
+			bottom: 0;
+			display: none;
+			justify-content: space-between;
+			text-decoration: none;
+			background-color: white;
+			padding-top: 6px;
+			width: 100%;
+			h2,
+			p {
+				font-size: 16px;
+				color: @dark-grey;
 			}
+		
 		}
-		a:hover {
-			position: relative;
-			span {
-				position: absolute;
-				top: 0px;
-				right: 0;
-				left: 0;
-				bottom: 5px;
-				background-color: rgba(0, 0, 0, 0.3); 
-				transition: background 0.3s;
+		&:hover {
+			img {
+				filter: none;
 			}
-		}
-		&:nth-of-type(5n) {
-			margin-right: 0;
+			.project-list__item-description {
+				display: flex;
+			}
 		}
 	}
 }
 
-.project-list__item-description {
-	display: flex;
-	justify-content: flex-start;
-	margin-top: 5px;
-	margin-bottom: 20px;
-	text-decoration: none;
 
-	h2 {
-		margin-bottom: 0;
-		line-height: 22px;
-		margin-right: 10px;
-		text-decoration: none;
-		font-weight: 600;
-		color: black;
-		text-transform: uppercase;
-
-	}
-	p {
-		color: black;
-		font-weight: 300;
-		margin-bottom: 0;
-		text-decoration: none;
-
-	}
-}
 .project-list.relacionados {
 	.project-list__item {
 		width: 22.5%;
@@ -68,11 +49,26 @@
 		text-decoration: none;
 	}
 }
+@media screen and (max-width: 950px) {
+	#resultado-posts.project-list {
+		.project-list__item {
+			width: calc((100% - 30px) / 2);
+			
+		}
+	}
+
+}
 @media screen and (max-width: 600px) {
 	#resultado-posts.project-list {
 		flex-direction: column;
 		.project-list__item {
 			width: 100%;
+			.project-list__item-description {
+				display: flex;
+				p {
+					margin-bottom: 0;
+				}
+			}
 		}
 	}
 

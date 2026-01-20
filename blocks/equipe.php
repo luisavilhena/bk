@@ -3,7 +3,7 @@
 use Carbon_Fields\Block;
 use Carbon_Fields\Field;
  
-add_action( 'after_setup_theme', 'gui-mattos' );
+add_action( 'after_setup_theme', 'bk' );
  
 function equipe_block() {
 	Block::make( 'Equipe' )

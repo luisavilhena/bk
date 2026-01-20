@@ -1,13 +1,36 @@
 @import './structure.less';
 
+.home,
+.page-template-page-tempo {
+	footer {
+		background-color: @grey;
+		.footer-about {
+			a {
+				color: white;
+				svg {
+					fill: white
+				}
+			}
+		}
+		a {
+			color: white
+		}
+		.animationbacktotop{
+				svg {
+					fill: transparent;
+				}
+		}
+	}
+}
+
 footer {
 	background-color: white;
-	color: black;
+	color: @dark-grey;
 	padding-top: 20px;
-	margin-left:20px;
+	padding-left:20px;
 	padding-bottom: 20px;
-	margin-right: 20px;
-	border-top: 1px solid black;
+	padding-right: 20px;
+
 	.projeto {
 		display: none;
 	}
@@ -32,13 +55,21 @@ footer {
 	a {
 		margin-right: 30px;
 		line-height: normal;
-		color: black;
+		color: @dark-grey;
 		text-decoration: none;
-		text-transform: uppercase;
+		font-size: 16px;
+		font-family: 'Inter', sans-serif;
+		font-weight: 400;
+		svg {
+			fill: @dark-grey;
+		}
 	}
-	a:hover {
-		font-weight: 600;
+	.animationbacktotop{
+		svg {
+			fill: transparent;
+		}
 	}
+
 	.footer-about {
 		display: flex;
 		justify-content: space-between;
@@ -49,7 +80,7 @@ footer {
 		}
 
 		p, a {
-			color: black;
+			color: @dark-grey;
 			font-size: 12px;
 			margin-bottom: 0;
 			text-decoration: none;
@@ -57,80 +88,18 @@ footer {
 		a {
 			display: block; 
 		}
-		a:hover {
-			font-weight: 600;
-		}
 	}
 	
 }
-@media screen and (max-width: 785px) {
-	footer.footer-sticky {
-		position: sticky;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		z-index: 10000;
-		.projeto {
-			display: none;
+@media screen and (max-width: @screen-md-2) {
+	footer {
+		a {
+			svg {
+				max-width: 15px;
+			}
 		}
 	}
-	footer {
-		position: relative;
-		margin-top: 50px;
-		#logo-anchor {
-			display: block;
-			margin-bottom: 20px;
-			margin-left: -8px;
-			img {
-				max-height: 33px;
-			}
-		}
-		.projeto {
-			position: absolute;
-			top: -50px;
-			right: 0;
-			left: 0;
-			height: 30px;
-			border-top: 1px solid black;
-			padding-top: 19px;
-			display: block;
-		}
-		a {
-			font-size: 12px;
-			margin-right: 0;
-		}
-		.footer-first {
-			>a {
-				display: none;
-			}
-		}
-
-		#footer-container{
-			display: block;
-			li {
-				a {
-					font-size: 12px;
-					margin-bottom: 20px;
-				}
-			}
-		}
-		.footer-about {
-			flex-direction: column;
-			.social-media {
-				flex-direction: column;
-				li {
-					a {
-						margin-right: 0;
-					}
-				}
-			}
-			div {
-				margin-bottom: 0px;
-			}
-
-			a,p {
-				margin-bottom: 20px;
-			}
-		}
+	.social-media > li > a {
+		margin-right: 10px;
 	}
 }

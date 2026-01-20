@@ -3,7 +3,7 @@
 use Carbon_Fields\Block;
 use Carbon_Fields\Field;
  
-add_action( 'after_setup_theme', 'gui-mattos-theme' );
+add_action( 'after_setup_theme', 'bk-theme' );
  
 function carousel() {
 	Block::make( 'Carousel' )

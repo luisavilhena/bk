@@ -1,20 +1,45 @@
 <?php
-add_action('wp_enqueue_scripts', 'guimattos');
-function guimattos(){
-    wp_enqueue_style('customstyle', get_template_directory_uri() . '/css/style.css', array(), '1.0.16', 'all');
+
+add_action('wp_ajax_filtrar_posts_por_categoria', function () {
+    wp_die('AJAX FUNCIONANDO');
+});
+
+add_action('wp_ajax_nopriv_filtrar_posts_por_categoria', function () {
+    wp_die('AJAX FUNCIONANDO');
+});
+add_action('wp_enqueue_scripts', 'bk');
+function bk() {
+    // garante estilos do core
+    wp_enqueue_style('wp-block-library');
+    wp_enqueue_style('wp-block-library-theme');
+
+    wp_enqueue_style(
+        'customstyle',
+        get_template_directory_uri() . '/css/style.css',
+        array(),
+        filemtime(get_template_directory() . '/css/style.css'),
+        'all'
+    );
     wp_enqueue_style('fontstyle', get_template_directory_uri() . '/font-style.css', array(), '1.0.1', 'all');
     wp_enqueue_style('slickcss', get_template_directory_uri() . '/slick/slick.css', array(), '1.8.0', 'all');
     wp_enqueue_style('slicktheme', get_template_directory_uri() . '/slick/slick-theme.css', array(), '1.8.0', 'all');
     wp_enqueue_script('slickjs',  get_template_directory_uri() . '/slick/slick.js', array('jquery'), '', false);
-    wp_enqueue_script('customjs',  get_template_directory_uri() . '/js/index.js', array(), NULL, false );
+    wp_enqueue_script(
+        'customjs',
+        get_template_directory_uri() . '/js/index.js',
+        array('jquery'), // remova se não usar jQuery
+        filemtime( get_template_directory() . '/js/index.js' ),
+        true // carrega no footer
+      );
 }
 
-function legit_block_editor_styles() {
-    wp_enqueue_style( 'legit-editor-styles', get_theme_file_uri( '/style-editor.css' ), false, '2.3', 'all' );
-} 
-add_action( 'enqueue_block_editor_assets', 'legit_block_editor_styles' );
 
-function guimattos_add_custom_image_sizes() {
+// function legit_block_editor_styles() {
+//     wp_enqueue_style( 'legit-editor-styles', get_theme_file_uri( '/style-editor.css' ), false, '2.3', 'all' );
+// } 
+// add_action( 'enqueue_block_editor_assets', 'legit_block_editor_styles' );
+
+function bk_add_custom_image_sizes() {
 
      // Add "vertical" image
     add_image_size( 'vertical', 600, 730, true);
@@ -31,7 +56,7 @@ function guimattos_add_custom_image_sizes() {
     add_image_size('image_desktop_full_no_crop', 3000 , 3500, false);
 }
 
-add_action('after_setup_theme', 'guimattos_add_custom_image_sizes' );
+add_action('after_setup_theme', 'bk_add_custom_image_sizes' );
 
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
@@ -49,10 +74,19 @@ function crb_attach_theme_options() {
             Field::make( 'text', 'youtube', 'Youtube' ),
             Field::make( 'text', 'facebook', 'Facebook' ),
             Field::make( 'text', 'linkedin', 'Linkedin' ),
+            Field::make( 'textarea', 'logo', 'Logo svg' ),
 
         ) );
 }
 
+// Permitir upload de SVG
+function allow_svg_upload( $mimes ) {
+    $mimes['svg']  = 'image/svg+xml';
+    $mimes['svgz'] = 'image/svg+xml';
+    return $mimes;
+  }
+  add_filter( 'upload_mimes', 'allow_svg_upload' );
+  
 
 
 
@@ -126,7 +160,7 @@ add_filter('upload_mimes', '_thz_enable_vcard_upload' );
 */
 function the_title_trim($title) {
 
-    $title = attribute_escape($title);
+    $title = esc_attr($title);
 
     $findthese = array(
         '#Protected:#',
@@ -309,13 +343,26 @@ add_action('wp_ajax_nopriv_filtrar_posts_por_categoria', 'filtrar_posts_por_cate
 
 function filtrar_posts_por_categoria() {
     if (isset($_POST['categorias_ids'])) {
-        
+                
         $args = array(
-            'post_type' => 'post', 
-            'post_status' => 'publish', 
-            'posts_per_page' => -1, 
-            'category__and' => $_POST['categorias_ids'] 
+            'post_type' => 'post',
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'tax_query' => array(
+                'relation' => 'AND'
+            )
         );
+        
+        if ( ! empty($_POST['categorias_ids']) && is_array($_POST['categorias_ids']) ) {
+            foreach ($_POST['categorias_ids'] as $cat_id) {
+                $args['tax_query'][] = array(
+                    'taxonomy' => 'category',
+                    'field'    => 'term_id',
+                    'terms'    => intval($cat_id),
+                    'include_children' => false,
+                );
+            }
+        }
 
         $query = new WP_Query($args);
 
@@ -370,6 +417,7 @@ function custom_search() {
     );
 
     $the_query = new WP_Query($args);
+
     ?>
     <div id="resultado-posts" class="project-list">
     <?php
@@ -407,10 +455,12 @@ function custom_search() {
 
 add_action('rest_api_init', function () {
     register_rest_route('myplugin', '/check-category-projects', array(
-        'methods' => 'GET',
+        'methods'  => 'GET',
         'callback' => 'check_category_projects',
+        'permission_callback' => '__return_true',
     ));
 });
+
 
 function check_category_projects(WP_REST_Request $request) {
     $category_id = intval($request->get_param('category_id'));
@@ -442,4 +492,89 @@ function check_category_projects(WP_REST_Request $request) {
 
 
 
+
+add_action( 'after_setup_theme', function() {
+    add_theme_support( 'wp-block-styles' );     // estilos extras do core
+    add_theme_support( 'responsive-embeds' );   // só bônus, mas é bom
+});
+add_action( 'after_setup_theme', function() {
+    add_theme_support( 'wp-block-styles' ); // estilos extras de blocos
+});
+
+
+
+add_action('wp_ajax_load_more_posts', 'load_more_posts');
+add_action('wp_ajax_nopriv_load_more_posts', 'load_more_posts');
+function load_more_posts() {
+
+    if ( ! defined('DOING_AJAX') || ! DOING_AJAX ) {
+        wp_die();
+    }
+
+    $offset   = isset($_POST['offset']) ? max(0, intval($_POST['offset'])) : 0;
+    $per_page = 4;
+
+    $args = [
+        'post_type'           => 'post',
+        'post_status'         => 'publish',
+        'posts_per_page'      => $per_page,
+        'offset'              => $offset,
+        'orderby'             => 'date',
+        'order'               => 'DESC',
+        'ignore_sticky_posts' => true,
+    ];
+
+    // filtros válidos
+    $filters = ['tipologia','local','fase','decada','escala','premiado'];
+    $tax_query = [];
+
+    foreach ($filters as $filter) {
+        if ( isset($_POST[$filter]) && $_POST[$filter] !== '' ) {
+            $tax_query[] = [
+                'taxonomy'         => 'category',
+                'field'            => 'term_id',
+                'terms'            => (int) $_POST[$filter],
+                'include_children' => false,
+            ];
+        }
+    }
+
+    if ( ! empty($tax_query) ) {
+        $args['tax_query'] = array_merge(
+            ['relation' => 'AND'],
+            $tax_query
+        );
+    }
+
+    $query = new WP_Query($args);
+
+    if ( $query->have_posts() ) :
+        while ( $query->have_posts() ) : $query->the_post();
+
+            $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'horizontal');
+            $post_url      = get_permalink();
+            $excerpt       = get_the_excerpt();
+            ?>
+
+            <a href="<?php echo esc_url($post_url); ?>" class="project-list__item">
+                <?php if ($thumbnail_url) : ?>
+                    <div class="post-thumbnail">
+                        <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php the_title_attribute(); ?>">
+                        <span></span>
+                    </div>
+                <?php endif; ?>
+
+                <div class="project-list__item-description">
+                    <h2 class="post-title"><?php the_title(); ?></h2>
+                    <p><?php echo esc_html($excerpt); ?></p>
+                </div>
+            </a>
+
+        <?php
+        endwhile;
+        wp_reset_postdata();
+    endif;
+
+    wp_die();
+}
 

@@ -1,4 +1,19 @@
 //current menu link bold
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.PhotoSwipe) {
+    var originalGetViewportSize = PhotoSwipe.prototype.getViewportSize;
+
+    PhotoSwipe.prototype.getViewportSize = function() {
+      var size = originalGetViewportSize.call(this);
+      return {
+        x: size.x * 0.9,  // largura máxima (90%)
+        y: size.y * 0.85  // altura máxima (85%)
+      };
+    };
+  }
+});
+
+console.log('aqui')
 jQuery(document).ready(function($) {
     var url = window.location.href;
     $('.menu-item a').each(function() {
@@ -7,7 +22,23 @@ jQuery(document).ready(function($) {
         }
     });
 });
+document.querySelectorAll('nav a').forEach(link => {
+	if (!link.dataset.text) {
+	  link.dataset.text = link.textContent.trim();
+	}
+});
 
+//ler mais single projetos
+document.querySelectorAll('.toggle-descricao').forEach(button => {
+	button.addEventListener('click', () => {
+	  const container = button.closest('.descricao-do-projeto');
+	  const isOpen = container.classList.toggle('is-open');
+  
+	  button.textContent = isOpen ? 'Ler menos' : 'Ler mais';
+	});
+});
+  
+  
 
 
 
@@ -81,7 +112,7 @@ $(document).ready(function(){
 			autoplay: true,
 			autoplaySpeed: 2000,
 			speed: 2000,
-			arrows: true,
+			dots: true,
 			fade: true,
 		});
 	$('#carousel-project').slick({
@@ -93,18 +124,20 @@ $(document).ready(function(){
 		speed: 2000,
 		dots: true,
 	});
+
 });
 
 
 
 
-//LOADING
-$(document).ready(function(){
-	$('.loading').on("click", function(e){
-		$(this).css('display', "none")
-	})
-	$('.loading').delay(7000).fadeOut('slow')
-})
+
+
+
+
+
+
+
+
 
 
 
@@ -265,8 +298,285 @@ document.addEventListener("DOMContentLoaded", function() {
   
 
 
+document.addEventListener('DOMContentLoaded', () => {
+
+    const space  = document.querySelector('.space');
+    const filter = document.querySelector('.filter');
+
+    if (!space || !filter) return;
+
+    space.addEventListener('click', () => {
+        filter.classList.toggle('mobile-open');
+    });
+
+});
+
+function getCenteredSlide(slick) {
+    const center = slick.$list.width() / 2;
+    let closest = null;
+    let minDist = Infinity;
+
+    slick.$slides.each(function () {
+        const $slide = $(this);
+        const left   = $slide.position().left;
+        const width  = $slide.outerWidth();
+        const slideCenter = left + width / 2;
+
+        const dist = Math.abs(slideCenter - center);
+
+        if (dist < minDist) {
+            minDist = dist;
+            closest = $slide;
+        }
+    });
+
+    return closest;
+}
+jQuery(function ($) {
+
+    const $timeline = $('#timeline');
+    if (!$timeline.length) return;
+
+    $timeline.slick({
+		variableWidth: true,
+		slidesToScroll: 1,
+		infinite: false,
+		arrows: false,
+		dots: false,
+	
+		draggable: true,
+		swipe: true,
+		touchMove: true,
+	
+		// 🔥 ESSENCIAIS para suavidade
+		cssEase: 'linear',
+		speed: 800,
+		waitForAnimate: false,
+		touchThreshold: 15,     // 🔥 reduz "pulos"
+		swipeToSlide: true,     // 🔥 MUITO IMPORTANTE
+		centerMode: false       // 🔴 centerMode deixa o drag ruim
+    });
+
+});
 
 
+jQuery(function ($) {
+
+	const $timeline = $('#timeline');
+	const $years    = $('.timeline-year');
+	const $track    = $('.timeline-track');
+	const $scrubber = $('.timeline-scrubber');
+	const $handle   = $('.timeline-handle');
+	
+	if (!$timeline.length || !$years.length) return;
+	
+	/* =====================================================
+	   MAPA FIXO: ANO → SLIDE → ÍNDICE VISUAL
+	===================================================== */
+	const yearMap = [];
+	
+	$years.each(function (index) {
+		yearMap.push({
+			year:  String($(this).data('year')),
+			slide: Number($(this).data('slide')),
+			index,
+			el: this
+		});
+	});
+	
+	/* =====================================================
+	   MOVE SCRUBBER PARA UM ANO (visual)
+	===================================================== */
+	function moveHandleToYearIndex(index, animate = true) {
+		const $year = $years.eq(index);
+		if (!$year.length) return;
+	
+		const trackLeft = $track.offset().left;
+		const yearLeft  = $year.offset().left;
+		const yearW     = $year.outerWidth();
+		const handleW   = $handle.outerWidth();
+	
+		const x = yearLeft - trackLeft + (yearW / 2) - (handleW / 2);
+	
+		if (animate) {
+			$handle.stop().animate({ left: x }, 300);
+		} else {
+			$handle.css('left', x);
+		}
+	}
+	
+	
+	
+	/* =====================================================
+	   CLICK NO ANO → VAI PARA O SLIDE
+	===================================================== */
+	$years.on('click', function () {
+		const index = $years.index(this);
+		const slide = Number(this.dataset.slide);
+	
+		if (!Number.isInteger(slide)) return;
+	
+		$timeline.slick('slickGoTo', slide);
+	
+		$years.removeClass('active');
+		$(this).addClass('active');
+	
+		moveHandleToYearIndex(index); // ✅ correto
+	});
+	
+	
+	/* =====================================================
+	   SLICK → ATUALIZA ANO + SCRUBBER
+	===================================================== */
+	$timeline.on('afterChange', function (e, slick, currentSlide) {
+
+		const $slide = $(slick.$slides[currentSlide]);
+		const $project = $slide.find('.project-card');
+	
+		if (!$project.length) return;
+	
+		const year = String($project.data('year'));
+	
+		const entry = yearMap.find(item => item.year === year);
+		if (!entry) return;
+	
+		$years.removeClass('active');
+		$(entry.el).addClass('active');
+	
+		moveHandleToYearIndex(entry.index);
+	});
+	
+	
+	/* =====================================================
+	   SCROLL DO MOUSE → NAVEGA SLIDES
+	===================================================== */
+	let wheelTimeout = null;
+
+	$timeline.on('wheel', function (e) {
+		e.preventDefault();
+	
+		clearTimeout(wheelTimeout);
+	
+		wheelTimeout = setTimeout(() => {
+			if (e.originalEvent.deltaY > 0) {
+				$timeline.slick('slickNext');
+			} else {
+				$timeline.slick('slickPrev');
+			}
+		}, 20); // quanto maior, mais suave
+	});
+	
+	
+	/* =====================================================
+	   SCRUBBER — DRAG
+	===================================================== */
+	let dragging = false;
+	
+	$handle.on('mousedown', function () {
+		dragging = true;
+		$handle.addClass('dragging');
+	});
+	
+	$(document).on('mouseup', function () {
+		if (!dragging) return;
+		dragging = false;
+		$handle.removeClass('dragging');
+		snapToClosestYear();
+	});
+	
+	$(document).on('mousemove', function (e) {
+		if (!dragging) return;
+	
+		const rect = $track[0].getBoundingClientRect();
+		const handleW = $handle.outerWidth();
+	
+		let x = e.clientX - rect.left - handleW / 2;
+		x = Math.max(0, Math.min(x, rect.width - handleW));
+	
+		$handle.css('left', x + 'px');
+	});
+	
+	/* =====================================================
+	   SNAP → ANO MAIS PRÓXIMO
+	===================================================== */
+	function snapToClosestYear() {
+		const handleLeft = parseFloat($handle.css('left')) || 0;
+		let closest = null;
+		let minDist = Infinity;
+	
+		$years.each(function (index) {
+			const yearCenter =
+				$(this).offset().left -
+				$track.offset().left +
+				($(this).outerWidth() / 2);
+	
+			const handleCenter = handleLeft + ($handle.outerWidth() / 2);
+			const dist = Math.abs(handleCenter - yearCenter);
+	
+			if (dist < minDist) {
+				minDist = dist;
+				closest = yearMap[index];
+			}
+		});
+	
+		if (!closest) return;
+	
+		$timeline.slick('slickGoTo', closest.slide);
+		moveHandleToYearIndex(closest.index);
+	
+		$years.removeClass('active');
+		$(closest.el).addClass('active');
+	}
+	
+	/* =====================================================
+	   ESTADO INICIAL
+	===================================================== */
+	moveHandleToYearIndex(0);
+	$years.first().addClass('active');
+	
+	});
 
 
+	jQuery(function ($) {
 
+		$('.projects-carousel').on('click', '.project-card .text', function (e) {
+			e.stopPropagation();
+	
+			const $card = $(this).closest('.project-card');
+	
+			// 🔥 remove de todos os outros
+			$('.project-card.horizontal').not($card).removeClass('horizontal');
+	
+			// 🔁 toggle apenas no clicado
+			$card.toggleClass('horizontal');
+		});
+	
+	});
+	
+
+	
+document.addEventListener('DOMContentLoaded', function () {
+
+	const blockFilter = document.getElementById('filtro-categorias');
+	
+	document.querySelectorAll('.category').forEach(category => {
+		category.addEventListener('click', function (e) {
+	
+			const sibling = this.nextElementSibling;
+			if (!sibling || !sibling.classList.contains('sibling')) return;
+	
+			// single NÃO abre dropdown
+			if (sibling.classList.contains('single')) return;
+	
+			if (sibling.classList.contains('active')) {
+				sibling.classList.remove('active');
+				blockFilter.classList.remove('open');
+			} else {
+				document.querySelectorAll('.sibling').forEach(el => el.classList.remove('active'));
+				sibling.classList.add('active');
+				blockFilter.classList.add('open');
+			}
+		});
+	});
+	
+	});

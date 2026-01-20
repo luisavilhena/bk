@@ -31,6 +31,9 @@
 
 /////
 @black: #18191F;
+@grey: #808080;
+@dark-grey: #464646;
+@light-grey: #A2A2A2;
 @orange: #F4920B;
 @light-pink: #FCE5C4;
 @pink-bg:#fff9f1;
@@ -38,43 +41,57 @@
 @light-blue: #C7E6FF;
 @dark-blue: #0B0D17;
 @blue: #015EA7;
-	
+// html {
+//     margin-top: 0px !important;
+// }
+
+// #wpadminbar {
+//     display: none;
+// }
 .structure-container {
-    max-width: @screen-lg;
-    margin: 0 auto;
-    padding: 100px 50px 35px 50px;
-    min-height: 80vh;
-}
-#cinza.structure-container {
-    padding: 100px 50px;
-}
-#cinza .card-list {
-    margin-bottom: 0;
-}
+    padding: 100px 20px 0px 20px;
+    &.structure-container-bigger {
+        padding: 130px 20px 0px 20px;
 
-:where(.wp-block-columns.is-layout-flex){
-    gap:1em;
-}
-.wp-block-group {
-    box-sizing: border-box;
-    padding-top: 30px !important;
-    padding-bottom: 100px !important;
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-}
-@media screen and (max-width: 700px) {
-    .structure-container,
-    #cinza.structure-container {
-        padding: 45px 15px 30px 15px;
-    }
-    .wp-block-spacer {
-        height: 0 !important;
-    }
-    .wp-block-group {
-        padding-top: 0px !important;
-        padding-bottom: 0px !important;
     }
 }
+.columns-container {
+    display: flex;
+    gap: 30px;
+    height: calc(100vh - 100px);
+    &.without-height {
+        flex: 1;
+        height: unset;
+    }
+    .column-left {
+        width: 25%;
+    }
+    .column-right {
+        width: 75%;
+    }
+    .column-left,
+    .column-right {
+      overflow-y: auto;
+      scrollbar-width: none;      /* Firefox */
+      -ms-overflow-style: none;   /* IE / Edge antigo */
+    }
+    
+    .column-left::-webkit-scrollbar,
+    .column-right::-webkit-scrollbar {
+      display: none;              /* Chrome / Safari */
+    }
+    @media screen and (max-width: @screen-md-2) {
+        flex-direction: column;
+        height: auto;
+        .column-left,
+        .column-right {
+            width: 100%;
+            height: auto;
+        }
+
+    }
+    
+}
 
 
 
@@ -86,17 +103,3 @@
 
 
 
-// //Columns
-// .wp-block-image {
-// 	margin-bottom: 0 !important;
-// }
-// .structure-justify-start {
-// 	justify-content: flex-start !important;
-// }
-// .structure-text-left {
-// 	text-align: left !important;
-// }
-// body {
-// 	// max-width: 1400px;
-// 	// margin: 0 auto;
-// }

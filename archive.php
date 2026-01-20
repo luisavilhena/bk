@@ -1,62 +1,60 @@
 <?php
-get_header(); 
+get_header();
 
-$tipologia = isset($_GET['tipologia']) ? intval($_GET['tipologia']) : '';
-$local = isset($_GET['local']) ? intval($_GET['local']) : '';
-$fase = isset($_GET['fase']) ? intval($_GET['fase']) : '';
-$decada = isset($_GET['decada']) ? intval($_GET['decada']) : ''; // Novo filtro de década
-$search_query = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : ''; // Parâmetro de busca
+// filtros via GET
+$filters = [
+    'tipologia' => isset($_GET['tipologia']) ? intval($_GET['tipologia']) : 0,
+    'local'     => isset($_GET['local']) ? intval($_GET['local']) : 0,
+    'fase'      => isset($_GET['fase']) ? intval($_GET['fase']) : 0,
+    'decada'    => isset($_GET['decada']) ? intval($_GET['decada']) : 0,
+    'escala'    => isset($_GET['escala']) ? intval($_GET['escala']) : 0,
+    'premiado'  => isset($_GET['premiado']) ? intval($_GET['premiado']) : 0,
+];
 
+$search_query   = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
+$posts_per_page = 12;
+$paged          = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
 
-// Configura os argumentos para a consulta principal
-$args = array(
-    'post_type' => 'post',
-    'post_status' => 'publish',
-    'order' => 'DESC',
-    'orderby' => 'date',
-    'posts_per_page' => -1,
-    's' => $search_query, // Adiciona a busca aos argumentos
-    'tax_query' => array('relation' => 'AND'),
-);
+// base da query
+$args = [
+    'post_type'           => 'post',
+    'post_status'         => 'publish',
+    'posts_per_page'      => $posts_per_page,
+    'paged'               => $paged,
+    'orderby'             => 'date',
+    'order'               => 'DESC',
+    'ignore_sticky_posts' => true,
+    's'                   => $search_query,
+    'orderby' => [
+        'date' => 'DESC',
+        'ID'   => 'DESC',
+    ]
+];
 
-if ($tipologia) {
-    $args['tax_query'][] = array(
-        'taxonomy' => 'category',
-        'field'    => 'term_id',
-        'terms'    => $tipologia,
-        'include_children' => false,
+// monta tax_query corretamente
+$tax_query = [];
+
+foreach ($filters as $value) {
+    if ($value) {
+        $tax_query[] = [
+            'taxonomy'         => 'category',
+            'field'            => 'term_id',
+            'terms'            => $value,
+            'include_children' => false,
+        ];
+    }
+}
+
+if (!empty($tax_query)) {
+    $args['tax_query'] = array_merge(
+        ['relation' => 'AND'],
+        $tax_query
     );
 }
 
-if ($local) {
-    $args['tax_query'][] = array(
-        'taxonomy' => 'category',
-        'field'    => 'term_id',
-        'terms'    => $local,
-        'include_children' => false,
-    );
-}
-
-if ($fase) {
-    $args['tax_query'][] = array(
-        'taxonomy' => 'category',
-        'field'    => 'term_id',
-        'terms'    => $fase,
-        'include_children' => false,
-    );
-}
-
-if ($decada) {
-    $args['tax_query'][] = array(
-        'taxonomy' => 'category',
-        'field'    => 'term_id',
-        'terms'    => $decada,
-        'include_children' => false,
-    );
-}
-
-// Execute a consulta principal
+// query final
 $the_query = new WP_Query($args);
+
 
 // Obtenha todos os termos da taxonomia 'category' para análise, incluindo termos filhos
 $all_terms = get_terms(array(
@@ -71,7 +69,7 @@ foreach ($all_terms as $term) {
     $term_args = array(
         'post_type' => 'post',
         'post_status' => 'publish',
-        's' => $search_query, // Inclui a busca na consulta dos termos
+        's' => $search_query,
         'tax_query' => array('relation' => 'AND'),
     );
 
@@ -107,7 +105,24 @@ foreach ($all_terms as $term) {
         );
     }
 
-    // Adiciona o termo atual à consulta
+    if ($escala) {
+        $term_args['tax_query'][] = array(
+            'taxonomy' => 'category',
+            'field'    => 'term_id',
+            'terms'    => $escala,
+        );
+    }
+
+    if ($premiado) {
+        $term_args['tax_query'][] = array(
+            'taxonomy' => 'category',
+            'field'    => 'term_id',
+            'terms'    => $premiado,
+            'include_children' => false,
+        );
+    }
+
+    // 👉 Aqui SIM entra o termo sendo avaliado
     $term_args['tax_query'][] = array(
         'taxonomy' => 'category',
         'field'    => 'term_id',
@@ -117,138 +132,191 @@ foreach ($all_terms as $term) {
 
     $term_query = new WP_Query($term_args);
 
-    // Se não houver posts, marque o termo como sem projetos
     if (!$term_query->have_posts()) {
         $filter_status[$term->term_id] = 'no-projects';
     }
 
     wp_reset_postdata();
 }
+
+$svg_path = file_get_contents(get_template_directory() . '/resources/icons/arrow-thin.svg');
+
+
+
 ?>
 
-<div id="category" class="structure-container">
-    <div class="structure-container__content structure-container__side">
-        <div class="filter">
-            <div class="filter-form">
-                <form id="filtro-categorias" method="GET">
-                <div id="loading" class="loading">
-                <div class="spinner"></div>
-            </div>
-                    <div class="blocos">
-                        <div class="blocos-1">
-                            <!-- Tipologia -->
-                            <div class="bloco">
-                                <?php
-                                $tipo = 'tipologia';
-                                $tipo_term = get_term_by('slug', $tipo, 'category');
-                                $terms = get_terms(array(
-                                    'taxonomy' => 'category',
-                                    'hide_empty' => true,
-                                    'parent' => $tipo_term->term_id,
-                                ));
-                                ?>
-                                <div class="selections">
-                                    <div  data-selected="tipologia" class="filter-selected"></div>
-                                    <div name="tipologia" id="select-tipologia">
-                                        <span class="category"><?php echo $tipo_term->name; ?></span>
-                                        <ul class="sibling">
-                                        <?php
-                                        foreach ($terms as $term) {
-                                            $class = isset($filter_status[$term->term_id]) ? 'class="' . $filter_status[$term->term_id] . '"' : '';
-                                            echo '<li data-term-id="' . $term->term_id . '" data-filter="tipologia" ' . $class . '>' . $term->name . '</li>';
-                                        }
-                                        ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+<?php
+function render_filter_block($args) {
+    $slug          = $args['slug'];
+    $filter_status = $args['filter_status'];
+    $svg_path      = $args['svg_path'];
 
-                            <!-- Local -->
-                            <div class="bloco">
-                                <?php
-                                $tipo = 'local';
-                                $tipo_term = get_term_by('slug', $tipo, 'category');
-                                $terms = get_terms(array(
-                                    'taxonomy' => 'category',
-                                    'hide_empty' => true,
-                                    'parent' => $tipo_term->term_id,
-                                ));
-                                ?>
-                                <div class="selections">
-                                    <div data-selected="local" class="filter-selected"></div>
-                                    <div name="local" id="select-local">
-                                        <span class="category"><?php echo $tipo_term->name; ?></span>
-                                        <ul class="sibling">
-                                        <?php
-                                        foreach ($terms as $term) {
-                                            $class = isset($filter_status[$term->term_id]) ? 'class="' . $filter_status[$term->term_id] . '"' : '';
-                                            echo '<li data-term-id="' . $term->term_id . '" data-filter="local" ' . $class . '>' . $term->name . '</li>';
-                                        }
-                                        ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+    $parent = get_term_by('slug', $slug, 'category');
+    if (!$parent || is_wp_error($parent)) return;
 
-                            <!-- Fase -->
-                            <div class="bloco">
-                                <?php
-                                $tipo = 'fase';
-                                $tipo_term = get_term_by('slug', $tipo, 'category');
-                                $terms = get_terms(array(
-                                    'taxonomy' => 'category',
-                                    'hide_empty' => true,
-                                    'parent' => $tipo_term->term_id,
-                                ));
-                                ?>
-                                <div class="selections">
-                                    <div data-selected="fase" class="filter-selected"></div>
-                                    <div name="fase" id="select-fase">
-                                        <span class="category"><?php echo $tipo_term->name; ?></span>
-                                        <ul class="sibling">
-                                        <?php
-                                        foreach ($terms as $term) {
-                                            $class = isset($filter_status[$term->term_id]) ? 'class="' . $filter_status[$term->term_id] . '"' : '';
-                                            echo '<li data-term-id="' . $term->term_id . '" data-filter="fase" ' . $class . '>' . $term->name . '</li>';
-                                        }
-                                        ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+    $terms = get_terms([
+        'taxonomy'   => 'category',
+        'hide_empty' => true,
+        'parent'     => $parent->term_id,
+    ]);
 
-                            <!-- Década -->
-                            <div class="bloco">
-                                <?php
-                                $tipo = 'decada';
-                                $tipo_term = get_term_by('slug', $tipo, 'category');
-                                $terms = get_terms(array(
-                                    'taxonomy' => 'category',
-                                    'hide_empty' => true,
-                                    'parent' => $tipo_term->term_id,
-                                ));
-                                ?>
-                                <div class="selections">
-                                    <div data-selected="decada" class="filter-selected"></div>
-                                    <div name="decada" id="select-decada">
-                                        <span class="category"><?php echo $tipo_term->name; ?></span>
-                                        <ul class="sibling">
-                                        <?php
-                                        foreach ($terms as $term) {
-                                            $class = isset($filter_status[$term->term_id]) ? 'class="' . $filter_status[$term->term_id] . '"' : '';
-                                            echo '<li data-term-id="' . $term->term_id . '" data-filter="decada" ' . $class . '>' . $term->name . '</li>';
-                                        }
-                                        ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+    // label padrão
+    $label = $parent->name;
 
-                        </div>
-                    </div>
-                </form>
+    // label selecionado via GET
+    if (!empty($_GET[$slug])) {
+        $selected = get_term((int) $_GET[$slug], 'category');
+        if ($selected && !is_wp_error($selected)) {
+            $label = $selected->name;
+        }
+    }
+    ?>
+        <div class="selections">
+            <div name="<?php echo esc_attr($slug); ?>" id="select-<?php echo esc_attr($slug); ?>">
+                
+                <div class="category <?php echo !empty($_GET[$slug]) ? 'bold' : ''; ?>">
+                    <?php echo esc_html($label); ?>
+                    <?php echo $svg_path; ?>
+                </div>
+
+                <ul class="sibling">
+                    <!-- reset -->
+                    <li
+                        class="category-list-item is-reset"
+                        data-text="Nenhuma seleção"
+                        data-filter="<?php echo esc_attr($slug); ?>"
+                        data-term-id="">
+                        Nenhuma seleção
+                    </li>
+
+                    <?php foreach ($terms as $term) :
+                        $class = isset($filter_status[$term->term_id])
+                            ? 'no-projects'
+                            : '';
+                    ?>
+                        <li
+                            class="category-list-item <?php echo esc_attr($class); ?>"
+                            data-text="<?php echo esc_html($term->name); ?>"
+                            data-filter="<?php echo esc_attr($slug); ?>"
+                            data-term-id="<?php echo esc_attr($term->term_id); ?>">
+                            <?php echo esc_html($term->name); ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
             </div>
         </div>
+    <?php
+}
+?>
+
+<?php
+function render_single_filter_block($args) {
+    $slug = $args['slug'];
+
+    $term = get_term_by('slug', $slug, 'category');
+    if (!$term || is_wp_error($term)) return;
+
+    $is_active = isset($_GET[$slug]) && intval($_GET[$slug]) === $term->term_id;
+    ?>
+        <div class="selections">
+            <div name="<?php echo esc_attr($slug); ?>" id="select-<?php echo esc_attr($slug); ?>">
+                <ul class="sibling single">
+                    <li
+                        class="category-list-item <?php echo $is_active ? 'bold' : ''; ?>"
+                        data-text="<?php echo esc_html($term->name); ?>"
+                        data-filter="<?php echo esc_attr($slug); ?>"
+                        data-term-id="<?php echo esc_attr($term->term_id); ?>">
+                        <?php echo esc_html($term->name); ?>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <?php
+}
+?>
+<div class="filter">
+    <div class="space"> Filtros  <?php echo $svg_path; ?></div>
+    <div id="filtro-categorias" method="GET">
+        <div class="blocos">
+            <div class="bloco">
+                <div class="selections">
+                    <div>
+                        <span class="category">
+                            Galeria de fotos
+                            <?php echo $svg_path; ?>
+                        </span>
+
+                        <ul class="sibling">
+                            <!-- reset -->
+                            <li
+                                class="category-list-item is-reset">
+                                Linha do Tempo
+                            </li>
+                            <li
+                                class="category-list-item is-reset">
+                                <a href="">Galeria de fotos</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <?php
+                render_filter_block([
+                    'slug'          => 'tipologia',
+                    'filter_status' => $filter_status,
+                    'svg_path'      => $svg_path,
+                ]);
+
+                render_filter_block([
+                    'slug'          => 'local',
+                    'filter_status' => $filter_status,
+                    'svg_path'      => $svg_path,
+                ]);
+
+                render_filter_block([
+                    'slug'          => 'fase',
+                    'filter_status' => $filter_status,
+                    'svg_path'      => $svg_path,
+                ]);
+
+                render_filter_block([
+                    'slug'          => 'decada',
+                    'filter_status' => $filter_status,
+                    'svg_path'      => $svg_path,
+                ]);
+
+                render_filter_block([
+                    'slug'          => 'escala',
+                    'filter_status' => $filter_status,
+                    'svg_path'      => $svg_path,
+                ]);
+                ?>
+
+                <?php
+                render_single_filter_block([
+                    'slug' => 'premiado'
+                ]);
+                ?>
+                </div>
+            </div>
+            <div>
+        </div>
+        <form role="search" method="get" class="search-form" id="search-form" action="<?php echo esc_url(home_url('/projetos')); ?>">
+            <label>
+                <span class="screen-reader-text"><?php echo _x('Search for:', 'label'); ?></span>
+                <input type="text" placeholder="Buscar" class="search-field" value="<?php echo get_search_query(); ?>" name="s" />
+            </label>
+            <button type="submit" class="search-submit">
+                <img alt="search" src="<?php echo get_template_directory_uri(); ?>/resources/icons/search.png">
+            </button>
+        </form> 
+    </div>
+
+</div>
+
+<div id="category" class="structure-container structure-container-bigger ">
+    <div class="structure-container__content structure-container__side">
         <div id="resultado-posts" class="project-list">
             <?php
             if ($the_query->have_posts()) {
@@ -290,135 +358,115 @@ foreach ($all_terms as $term) {
             }
             ?>
         </div>
+        <?php if ($the_query->max_num_pages > 1) : ?>
+            <?php if ($the_query->have_posts()) : ?>
+    <button
+        id="load-more"
+        data-offset="<?php echo esc_attr($the_query->post_count); ?>"
+        data-per-page="<?php echo esc_attr($the_query->query_vars['posts_per_page']); ?>">
+        Ver mais projetos <span>+</span>
+    </button>
+<?php endif; ?>
+
+
+
+        <?php endif; ?>
+
     </div>
 </div>
 
 <?php get_footer(); ?>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Adiciona evento de clique aos itens <li>
-    document.querySelectorAll('.selections li').forEach(function(item) {
-        item.addEventListener('click', function() {
-            if (this.classList.contains('no-projects')) {
-                return; // Não faz nada se o item tiver a classe 'no-projects'
-            }
 
-            const filterType = this.getAttribute('data-filter');
-            const termId = this.getAttribute('data-term-id');
-            const termText = this.textContent;
+document.addEventListener('DOMContentLoaded', function () {
 
-            // Atualiza a URL com o filtro selecionado
-            const urlParams = new URLSearchParams(window.location.search);
-            urlParams.set(filterType, termId);
+    const btn = document.getElementById('load-more');
+    if (!btn) return;
 
-            // Remove o parâmetro de busca 's'
-            urlParams.delete('s');
-            window.location.search = urlParams.toString();  // Recarrega a página com novos parâmetros de filtro
+    btn.addEventListener('click', function () {
 
-            // Armazena todos os filtros aplicados no armazenamento local
-            const selectedFilters = JSON.parse(localStorage.getItem('selectedFilters')) || {};
-            selectedFilters[filterType] = termText;
-            localStorage.setItem('selectedFilters', JSON.stringify(selectedFilters));
-        });
-    });
+        let offset  = parseInt(btn.dataset.offset, 10);
+        let perPage = parseInt(btn.dataset.perPage, 10);
 
-    // Restaura o estado dos filtros ao carregar a página
-    window.addEventListener('load', function() {
-        updateFilterDisplay();
-    });
-
-    // Atualiza a exibição dos filtros selecionados
-    function updateFilterDisplay() {
-        const selectedFilters = JSON.parse(localStorage.getItem('selectedFilters')) || {};
-
-        // Oculta todos os elementos `data-selected`
-        document.querySelectorAll('[data-selected]').forEach(function(div) {
-            div.style.display = "none";
-        });
-
-        // Exibe todos os elementos `.category`
-        document.querySelectorAll('.category').forEach(function(span) {
-            span.classList.remove('bold'); // Remove a classe 'bold' de todos os elementos
-            span.style.display = "block";
-        });
-
-        for (const [filterType, termText] of Object.entries(selectedFilters)) {
-            const filterSelectedDiv = document.querySelector(`[data-selected="${filterType}"]`);
-            if (filterSelectedDiv) {
-                filterSelectedDiv.style.display = "block";
-                filterSelectedDiv.textContent = 'x ' + termText;
-            }
-
-            const spanCategory = document.querySelector(`[name="${filterType}"] .category`);
-            if (spanCategory) {
-                spanCategory.style.display = "none";
-            }
+        if (isNaN(offset) || isNaN(perPage)) {
+            console.error('Offset inválido', btn.dataset);
+            return;
         }
-    }
 
-    // Ocultar o filtro selecionado quando clicado
-    document.addEventListener('click', function(event) {
-        if (event.target.hasAttribute('data-selected')) {
-            const selectedValue = event.target.getAttribute('data-selected');
+        const data = new URLSearchParams();
+        data.append('action', 'load_more_posts');
+        data.append('offset', offset);
 
-            // Oculta o filtro selecionado
-            event.target.style.display = 'none';
+        const allowedFilters = [
+            'tipologia','local','fase','decada','escala','premiado'
+        ];
 
-            // Mostra o menu de seleção correspondente
-            const targetElement = document.querySelector(`[name="${selectedValue}"] .category`);
-            if (targetElement) {
-                targetElement.style.display = 'block';
+        const params = new URLSearchParams(window.location.search);
+        allowedFilters.forEach(key => {
+            if (params.get(key)) {
+                data.append(key, params.get(key));
+            }
+        });
+
+        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            body: data.toString()
+        })
+        .then(res => res.text())
+        .then(html => {
+
+            if (!html.trim()) {
+                btn.remove();
+                return;
             }
 
-            // Remove o filtro selecionado do armazenamento local
-            const selectedFilters = JSON.parse(localStorage.getItem('selectedFilters')) || {};
-            delete selectedFilters[selectedValue];
-            localStorage.setItem('selectedFilters', JSON.stringify(selectedFilters));
+            document
+                .querySelector('#resultado-posts')
+                .insertAdjacentHTML('beforeend', html);
 
-            // Atualiza a URL para remover o filtro
-            const urlParams = new URLSearchParams(window.location.search);
-            urlParams.delete(selectedValue);
-            window.location.search = urlParams.toString();  // Recarrega a página com filtros removidos
-        }
-    });
-
-    // Mostrar/ocultar as listas de categorias
-    const blockFilter = document.getElementById("filtro-categorias");
-    document.querySelectorAll('.category').forEach(function(category) {
-        category.addEventListener('click', function() {
-            // Encontra a lista irmã
-            var sibling = this.nextElementSibling;
-
-            // Verifica se a lista irmã existe e tem a classe 'sibling'
-            if (sibling && sibling.classList.contains('sibling')) {
-                // Verifica se a lista irmã já tem a classe 'active'
-                if (sibling.classList.contains('active')) {
-                    // Remove a classe 'active' se já estiver ativa
-                    sibling.classList.remove('active');
-                    blockFilter.classList.remove('open');
-                } else {
-                    // Oculta todas as listas irmãs
-                    document.querySelectorAll('.sibling').forEach(function(siblingList) {
-                        siblingList.classList.remove('active');
-                        blockFilter.classList.remove('open');
-                    });
-
-                    // Adiciona a classe 'active' à lista irmã correspondente
-                    sibling.classList.add('active');
-                    blockFilter.classList.add('open');
-                }
-            }
-
-            // Remove a classe 'bold' de todos os outros elementos .category
-            document.querySelectorAll('.category').forEach(function(span) {
-                span.classList.remove('bold');
-            });
-
-            // Adiciona a classe 'bold' ao elemento clicado
-            this.classList.add('bold');
+            btn.dataset.offset = offset + perPage;
         });
     });
+
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.category-list-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            if (this.classList.contains('no-projects')) return;
+
+            const filter   = this.dataset.filter;
+            const termId   = this.dataset.termId; // pode ser ""
+            const isSingle = this.closest('.sibling')?.classList.contains('single');
+            const isActive = this.classList.contains('bold');
+
+            const params = new URLSearchParams(window.location.search);
+
+            // 🔁 SINGLE toggle (premiado)
+            if (isSingle && isActive) {
+                params.delete(filter);
+            } 
+            // reset (li vazio)
+            else if (!termId) {
+                params.delete(filter);
+            } 
+            // normal
+            else {
+                params.set(filter, termId);
+            }
+
+            params.delete('s');
+            window.location.search = params.toString();
+        });
+    });
+
 });
 
 </script>

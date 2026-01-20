@@ -1,0 +1,248 @@
+
+#timeline-page {
+    height: calc(100vh - 184px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: @grey;;
+    padding-bottom: 20px;
+    .columns-container {
+        position: relative;
+    }
+
+    .year-group {
+        display: flex;
+        flex-direction: row;
+    }
+    .header-timeline {
+        height: 45%;
+        display: flex;
+        align-items: end;
+        margin-bottom: 15px;
+        h1 {
+            color: white;
+            font-weight: 900;
+            font-size: 21px;
+            margin-bottom: 20px;
+        }
+        span {
+            color: white;
+            height: 1px;
+            width: 100%;
+            background-color: white;
+            position: absolute;
+            right: 0;
+            bottom: 57%;
+        }
+    }
+
+}
+
+
+.timeline-year {
+    cursor: pointer;
+    font-weight: 300;
+    color: @light-grey;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.timeline-control {
+    padding-top: 50px;
+}
+.timeline-year.active {
+    font-weight: 700;
+}
+.timeline-wrapper {
+    position: relative;
+    .timeline-scrubber {
+        position: relative; /* 👈 container de referência */
+        width: 100%;
+        height: 24px;
+        .timeline-handle {
+            position: absolute;
+            top: -4px;
+            left: 0;
+            width: 77px;
+            height: 10px;
+            background: white;
+            cursor: grab;
+        }
+        .line {
+            width: 100%;
+            height: 1px;
+            display: block;
+            background-color: white;
+        }
+    }
+    .timeline-track {
+        display: flex;
+        gap: 24px;
+        width: 100%;
+        justify-content: space-between;
+        color: white;
+        .year-major {
+            color: white;
+        }
+    }
+}
+
+
+
+
+
+
+.projects-carousel {
+    height: 100%;
+    .slick-slider {
+        height: 100%;
+        .slick-list {
+            height: 100%;
+        }
+        .slick-track {
+            display: flex;
+            height: 100%;
+    
+            .slick-slide {
+                height: auto;
+                display: flex;
+                align-items: stretch;
+                justify-content: center;
+                max-height: 570px;
+                .timeline-year-slide {
+                    height: 40%;
+                    display: flex !important;
+                    align-items: flex-end;
+                    justify-content: end;
+                    margin-bottom: 15px;
+                    h2 {
+                        color: white;
+                        font-size: 21px;
+                        font-weight: 900;
+                    }
+                }
+    
+                .project-card {
+                    width: 120px !important;
+                    height: 100%;
+                    display: grid !important;
+                    grid-template-rows: 40% 60%; /* 🔥 AQUI está a mágica */
+                    grid-gap: 30px;
+                    margin: 0 18px;
+                    cursor: pointer;
+                    .text{
+                        display: flex;
+                        align-items: flex-end;
+                        justify-content: center;
+                        overflow: hidden;
+                        h2, p {
+                            writing-mode: vertical-rl;
+                            text-orientation: mixed;
+                            transform: rotate(180deg);
+                            margin-bottom: 0;
+                            
+                        }
+                        h2 {
+                            color: white;
+                        }
+                        p {
+                            color: @light-grey;
+                        }
+                        .ver-mais {
+                            display: none;
+                        }
+                    }
+    
+                    a {
+                        // height: 50%;
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            display: block;
+                            filter: grayscale(100%);
+                        }
+                    }
+                    &.horizontal {
+                        width: 344px!important;
+                        .text {
+                            flex-direction: column;
+                            align-items: flex-start;
+                            justify-content: flex-end;
+                            position: relative;
+                            h2, p {
+                                writing-mode: horizontal-tb;
+                                transform: rotate(0deg);
+                            }
+                            .ver-mais {
+                                display: block;
+                                a {
+                                    display: block;
+                                    text-decoration: underline;
+                                    position: absolute;
+                                    right: 0;
+                                    bottom: 0;
+                                    color: white;
+                                    font-size: 16px;
+                                    width: auto;
+                                    height: auto;
+                                }
+
+                            }
+                        }
+                    }
+    
+                }
+                &:hover {
+                    .project-card {
+                        .text {
+                            h2,p {
+                                font-weight: 900;
+                            }
+                        }
+                        a {
+                            img {
+                                filter: none; 
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+}
+
+.page-template-page-tempo{
+    .filter .search-form .search-field {
+        color: white;
+        &::placeholder {
+            color: white;
+        }
+    }
+    #filtro-categorias .blocos .bloco{
+        .selections {
+            .category {
+                color: white;
+                svg {
+                }
+            }
+        }
+    
+        ul.sibling {
+            background-color: transparent;
+            li {
+                color: white;
+                a {
+                    color: white;
+                }
+            }
+        }
+    }
+
+} 
+
