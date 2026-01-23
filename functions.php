@@ -66,7 +66,7 @@ function crb_attach_theme_options() {
     Container::make( 'theme_options', __( 'Theme Options', 'crb' ) )
         ->add_fields( array(
             Field::make( 'text', 'email', 'E-mail Geral' ),
-            Field::make( 'text', 'novosprojetos', 'Novos Projetos' ),
+            Field::make( 'text', 'novospublicacoes', 'Novos publicacoes' ),
             Field::make( 'text', 'imprensa', 'Imprensa' ),
             Field::make( 'rich_text', 'endereco', 'Endereço' ),
 
@@ -237,15 +237,15 @@ add_filter ('yith_wcan_use_wp_the_query_object', '__return_true');
 ////taxonomia///
 ////////////////
 
-/* -- Post Type - Projetos -- */
-function custom_post_type_projetos() {
+/* -- Post Type - publicacoes -- */
+function custom_post_type_publicacoes() {
     $labels = [
-        "name" => __( "Projetos"),
-        "singular_name" => __( "Projetos"),
+        "name" => __( "Publicações"),
+        "singular_name" => __( "publicacoes"),
     ];
 
     $args = [
-        "label" => __( "Projetos"),
+        "label" => __( "publicacoes"),
         "labels" => $labels,
         "description" => "",
         "public" => true,
@@ -263,33 +263,33 @@ function custom_post_type_projetos() {
         "capability_type" => "post",
         "map_meta_cap" => true,
         "hierarchical" => false,
-        "rewrite" => [ "slug" => "projetos", "with_front" => false, 'hierarchical' => true ],
+        "rewrite" => [ "slug" => "publicacoes", "with_front" => false, 'hierarchical' => true ],
         "query_var" => true,
         "menu_position" => 5,
         "menu_icon" => "dashicons-book-alt",
         "supports" => [ "title", "editor", "thumbnail", "excerpt", "trackbacks", "custom-fields", "comments", "revisions", "author", "page-attributes", "post-formats" ],
-        "taxonomies" => [ "genero" ],
+        "taxonomies" => [ "publicacao"],
     ];
 
-    register_post_type( "projetos", $args );
+    register_post_type( "publicacoes", $args );
 }
 
-add_action( 'init', 'custom_post_type_projetos' );
+add_action( 'init', 'custom_post_type_publicacoes' );
 
 /* ------------------------------ Taxonomias - Genero -----------------------------*/
-function custom_taxonomy_projeto() {
+function custom_taxonomy_publicacao() {
 
     /**
-     * Taxonomy: Projeto.
+     * Taxonomy: publicacao.
      */
 
     $labels = [
-        "name" => __( "Tipos de projeto"),
-        "singular_name" => __( "Tipo de projeto"),
+        "name" => __( "Tipos de publicação"),
+        "singular_name" => __( "Tipo de publicaçãoo"),
     ];
 
     $args = [
-        "label" => __( "Tipo de projeto"),
+        "label" => __( "Tipo de publicação"),
         "labels" => $labels,
         "public" => true,
         "publicly_queryable" => true,
@@ -298,17 +298,17 @@ function custom_taxonomy_projeto() {
         "show_in_menu" => true,
         "show_in_nav_menus" => true,
         "query_var" => true,
-        "rewrite" => [ "slug" => "projeto", "with_front" => false, 'hierarchical' => true ],
+        "rewrite" => [ "slug" => "publicacao", "with_front" => false, 'hierarchical' => true ],
         "show_admin_column" => true,
         "show_in_rest" => true,
-        "rest_base" => "projeto",
+        "rest_base" => "publicacao",
         "rest_controller_class" => "WP_REST_Terms_Controller",
         "show_in_quick_edit" => true,
     ];
 
-    register_taxonomy( "projeto", [ "projetos" ], $args );
+    register_taxonomy( "publicacao", [ "publicacoes" ], $args );
 }
-add_action( 'init', 'custom_taxonomy_projeto' );
+add_action( 'init', 'custom_taxonomy_publicacao' );
 
 
 //add breadcrumb
@@ -392,7 +392,7 @@ function filtrar_posts_por_categoria() {
             wp_reset_postdata();
             echo ob_get_clean();
         else :
-            echo '<p>Nenhum projeto encontrado nessas categorias.</p>';
+            echo '<p>Nenhum publicacao encontrado nessas categorias.</p>';
         endif;
         
     }
@@ -444,7 +444,7 @@ function custom_search() {
         endwhile;
         wp_reset_postdata();
     } else {
-        echo '<p>' . esc_html__( 'Nenhum projeto foi encontrado com essa busca', 'text-domain' ) . '</p>';
+        echo '<p>' . esc_html__( 'Nenhum publicacao foi encontrado com essa busca', 'text-domain' ) . '</p>';
     }
     ?>
     </div>

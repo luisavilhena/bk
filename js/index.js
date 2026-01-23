@@ -124,14 +124,88 @@ $(document).ready(function(){
 		speed: 2000,
 		dots: true,
 	});
+});
+jQuery(function ($) {
+
+    $('.publicacoes-list').each(function () {
+        const $list = $(this);
+
+        if (!$list.hasClass('slick-initialized')) {
+            $list.slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: false,
+                speed: 2000,
+                autoplaySpeed: 2000,
+                dots: false,
+				variableWidth: true,
+				infinite: false,
+
+
+            });
+        }
+    });
 
 });
+jQuery(function ($) {
 
+    $('.archive-publicacoes').on('click', '.more', function (e) {
+        e.preventDefault();
 
+        const $group = $(this).closest('.publicacao-group');
+        const $list  = $group.find('.publicacoes-list');
+        const isOpen = $group.hasClass('expanded');
 
+        // 🔥 FECHA TODOS OS OUTROS
+        $('.publicacao-group.expanded').not($group).each(function () {
+            const $g = $(this);
+            const $l = $g.find('.publicacoes-list');
 
+            $g.removeClass('expanded');
 
+            if (!$l.hasClass('slick-initialized')) {
+                $l.slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: false,
+                    speed: 2000,
+                    autoplaySpeed: 2000,
+                    dots: false,
+                    variableWidth: true,
+					infinite: false
 
+                });
+            }
+        });
+
+        if (isOpen) {
+            // 🔒 FECHAR ATUAL
+            $group.removeClass('expanded');
+
+            if (!$list.hasClass('slick-initialized')) {
+                $list.slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: false,
+                    speed: 2000,
+                    autoplaySpeed: 2000,
+                    dots: false,
+					variableWidth: true,
+					infinite: false
+                });
+            }
+
+        } else {
+            // 🔓 ABRIR ATUAL
+            if ($list.hasClass('slick-initialized')) {
+                $list.slick('unslick');
+            }
+
+            $group.addClass('expanded');
+        }
+    });
+
+});
 
 
 
