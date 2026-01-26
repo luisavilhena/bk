@@ -1,0 +1,36 @@
+.ex-bks {
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+    padding-top: 30px;
+    gap: 30px;
+    border-top: 1px solid @dark-grey;
+
+    .col-left {
+        width: 25%;
+        font-size: 16px;
+        color: @dark-grey;
+        h3 {
+            font-weight: 900;
+        }
+    }
+
+    .col-right {
+        width: 75%;
+    }
+
+    .columns {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 30px;
+    }
+
+    .column {
+        font-size: 14px;
+        color: @dark-grey;
+        white-space: normal;
+        font-family: 'Inter', sans-serif;
+        font-weight: 300;
+        line-height: 1.25;
+    }
+}

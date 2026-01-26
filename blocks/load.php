@@ -4,6 +4,7 @@
 	require('carousel-team.php');
 	require('img-block.php');
 	require('carousel-arrow.php');
+	require('premiacoes.php');
 
 	
 	require('banner.php');
@@ -15,8 +16,10 @@
 	require('services.php');
 	require('cards-list.php');
 	require('mail.php');
-	require('link-list.php');
+	require('ex-bk.php');
 	require('store.php');
 	require('carousel-mini.php');
+
+	require('midia.php');
 
 ?>

@@ -654,3 +654,118 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 	
 	});
+
+jQuery(function ($) {
+
+	const $preview = $('.premio-hover-image');
+	const $img     = $preview.find('img');
+
+	$('.premios-grid').on('mouseenter', '.premios-row', function () {
+
+		const img = $(this).data('image');
+		if (!img) return;
+
+		const offset = $(this).position().top + 13;
+
+		$img.attr('src', img);
+		$preview.css({
+			top: offset,
+			opacity: 1
+		});
+	});
+
+	$('.premios-grid').on('mouseleave', '.premios-row', function () {
+		$preview.css('opacity', 0);
+	});
+
+	// 🔗 clique na linha inteira
+	$('.premios-grid').on('click', '.premios-row', function () {
+		const link = $(this).data('link');
+		if (link) {
+			window.location.href = link;
+		}
+	});
+
+});
+
+jQuery(function ($) {
+
+    function initPremiosMobile() {
+        const $carousel = $('.premios-mobile-carousel');
+
+        if (!$carousel.length) return;
+
+        if ($(window).width() <= 768 && !$carousel.hasClass('slick-initialized')) {
+            $carousel.slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: false,
+            });
+        }
+
+        if ($(window).width() > 768 && $carousel.hasClass('slick-initialized')) {
+            $carousel.slick('unslick');
+        }
+    }
+
+    initPremiosMobile();
+    $(window).on('resize', initPremiosMobile);
+
+});
+
+jQuery(function ($) {
+
+    $('.equipe').on('mouseenter', '.member', function () {
+
+        const $member = $(this);
+        const $grid   = $member.closest('.equipe-grid');
+
+        $grid.find('.info-title').text($member.data('title'));
+        $grid.find('.info-subtitle').text($member.data('subtitle'));
+        $grid.find('.info-bio').text($member.data('bio'));
+
+    });
+
+});
+
+document.querySelectorAll('.equipe-grid .member').forEach(member => {
+
+    member.addEventListener('mouseenter', () => {
+
+        const row  = member.closest('.equipe-grid');
+        const info = row.querySelector('.equipe-info');
+
+        if (!info) return;
+
+        const memberRect = member.getBoundingClientRect();
+        const rowRect    = row.getBoundingClientRect();
+
+        // 🔥 altura e posição iguais à imagem
+        info.style.top    = `${memberRect.top - rowRect.top}px`;
+        info.style.height = `${memberRect.height}px`;
+
+
+        // popula conteúdo
+        info.querySelector('.info-title').textContent =
+            member.dataset.title || '';
+
+        info.querySelector('.info-subtitle').textContent =
+            member.dataset.subtitle || '';
+
+        info.querySelector('.info-bio').textContent =
+            member.dataset.bio || '';
+
+        info.classList.add('active');
+    });
+
+    member.addEventListener('mouseleave', () => {
+        const row  = member.closest('.equipe-grid');
+        const info = row.querySelector('.equipe-info');
+
+        if (!info) return;
+
+        info.classList.remove('active');
+    });
+
+});

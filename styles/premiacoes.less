@@ -1,0 +1,190 @@
+.premios-grid {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 150px;
+    .premio-hover-image {
+        position: absolute;
+        top: -13px;
+        left: 7%;
+        width: 240px;
+        height: 150px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 10;
+    
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @media (max-width: 1237px) {
+            left: 5%;
+        }
+        @media (max-width: 1110px) {
+            width: 150px;
+            height: 100px;
+        }
+    }
+    .premios-header {
+        display: grid;
+        grid-template-columns: 25% 75%;
+        padding: 14px 0;
+        border-bottom: 2px solid @dark-grey;
+        font-family: 'Inter', sans-serif;
+        color: @dark-grey;
+    
+        .col-right {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-left: 30px;
+        }
+    
+        div {
+            font-weight: 900;
+            font-size: 16px;
+        }
+    }
+    
+    .premios-row {
+        display: grid;
+        grid-template-columns: 25% 75%;
+        cursor: pointer;
+        position: relative;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+        color: @dark-grey;
+        font-weight: 300;
+        a {
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            color: @dark-grey;
+            font-size: 14px;
+        }
+    
+        .col-ano {
+            font-weight: 900;
+            font-family: 'Inter', sans-serif;
+            color: @dark-grey;
+            padding-top: 13px;
+        }
+        .col-right {
+            padding: 13px 0 ;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            border-bottom: 1px solid @dark-grey;
+            margin-left: 30px;
+        }
+        &.year-end {
+            border-bottom: 2px solid @dark-grey;
+            .col-right {
+                border-bottom: none;
+                padding-bottom: 40px;
+                
+            }
+        }
+    }
+
+}
+
+
+
+.premios-mobile {
+    display: none;
+}
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .premios-grid {
+        display: none;
+    }
+
+    .premios-mobile {
+        display: block;
+    }
+
+    .premios-mobile-carousel {
+        .slick-slide {
+            margin: 0 10px;
+
+        }
+
+        .premio-image {
+            display: block;
+
+            img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+                display: block;
+            }
+        }
+
+        .premio-info {
+            margin-top: 16px;
+            display: grid;
+            row-gap: 25px;
+
+        }
+        .ano {
+            font-weight: 900;
+            display: block;
+            margin-bottom: 15px;
+            font-family: 'Inter', sans-serif;
+            color: @dark-grey;
+            font-size: 18px;
+            border-bottom: 1px solid @dark-grey;
+            padding-bottom: 15px;
+        }
+        .premio-row {
+            display: grid;
+            grid-template-columns: 30% 70%; // 👈 ajuste como quiser
+        }
+        
+        .premio-label {
+            font-weight: 900;
+            font-size: 14px;
+            color: @dark-grey;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .premio-value {
+            font-size: 14px;
+            line-height: 1.4;
+            color: @dark-grey;
+            font-family: 'Inter', sans-serif;
+
+        }
+        .slick-slide {
+            margin: 0 10px;
+        }
+        
+        .slick-list {
+            margin: 0 -10px;
+        }
+        
+        .publicacao-item,
+        .premio-info {
+            min-width: 0;
+        }
+        
+        .premio-info p {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        .slick-slide {
+            box-sizing: border-box;
+        }
+        
+        .premio-info > div {
+            min-width: 0;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        
+        
+    }
+}

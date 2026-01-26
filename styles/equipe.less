@@ -1,78 +1,151 @@
-#equipe {
-	margin: 0px 0 100px 0;
-	.equipe-items {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		.equipe-item{
-			display: flex;
-			width: 29%;
-			align-items: flex-start;
-			margin: 20px 0;
-			img {
-				border-radius: 20px;
-				width: 42%;
-				max-width: 230px;
-				margin-right: 15px;
-			}
-			div {
-				h4 {
-					margin-bottom: 7px;
-				}
-				p {
-					font-size: 15px;
-					margin-bottom: 10px;
-					line-height: 20px;
-				}
-			}
+.equipe {
+
+    .col-left {
+        width: 25%;
+        position: relative;
+		h2{
+			font-weight: 900;
+			color: @dark-grey;
 		}
-		.equipe-item__2columns {
-			width: 40%;
-			img {
-				width: 42%;
-				margin-right: 15px;
-			}
-			div {
-			}
-		}
+    }
+	.col-right {
+		width: 75%;
 	}
-}
-@media screen and (max-width: 1250px){
-	#equipe {
-		.equipe-items {
-			.equipe-item{
-				margin: 20px auto;
-				img {
-					max-width: 250px;
-				}
-			}
-		}
+	img {
+		width: 100%;
+		height: auto;
 	}
 
+    .equipe-hero {
+        display: flex;
+        gap: 30px;
+    }
+
+    .equipe-grid {
+        display: flex;
+        margin-top: 30px;
+		gap: 30px;
+        align-items: stretch;
+		
+
+        .equipe-info {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; // 🔥 agora funciona
+            opacity: 0;
+            transition: opacity 0.3s ease;
+			&.default {
+				opacity: 1;
+			}
+        }
+
+        &:hover {
+            .equipe-info {
+                opacity: 1;
+            }
+        }
+
+        .grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        &.grid-3 .grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        &.grid-2 .grid {
+			padding-top: 30px;
+			border-top: 1px solid @dark-grey;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .member {
+            cursor: pointer;
+
+            img {
+                width: 100%;
+                display: block;
+            }
+        }
+    }
 }
-@media screen and (max-width: @screen-sm){
-	#equipe {
-		margin: 0 0 50px 0;
-		.equipe-items {
-			flex-direction: column;
-			.equipe-item__2columns {
-				width: 100%;
-			}
-			.equipe-item{
-				width: 100%;
-				align-items: start;
-				img {
-					width: 150px;
-					margin-right: 10px;
-				}
-				div {
-					width: auto;
-				}
-				p {
-					font-size: 14px;
-					margin-bottom: 10px;
-				}
-			}
-		}
+.equipe-info {
+	transition: opacity 0.3s ease;
+	opacity: 0;
+	.info-title {
+		font-weight: 900;
 	}
+	.info-subtitle {
+		font-weight: 300;
+	}
+	.info-bio {
+		font-weight: 300;
+		color: @dark-grey;
+		font-family: 'Inter', sans-serif;
+	}
+	&.active {
+		opacity: 1;
+	}
+}
+  
+
+.equipe-info {
+    position: absolute;
+    left: 0;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* estado default */
+.equipe-info .info-hover {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.equipe-info .info-default {
+    opacity: 1;
+    transition: opacity 0.25s ease;
+	.info-title-default {
+		font-weight: 900;
+	}
+}
+
+/* quando hover ativo */
+.equipe-info.active .info-default {
+    opacity: 0;
+}
+
+.equipe-info.active .info-hover {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.info-default {
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+/* ===== HOVER ===== */
+.info-hover {
+    opacity: 0;
+    height: 100%;                 // 🔥 FUNDAMENTAL
+    display: flex;                // 🔥
+    flex-direction: column;       // 🔥
+    justify-content: space-between; // 🔥 agora funciona
+    transition: opacity 0.25s ease;
+}
+
+/* alternância */
+.equipe-info.active {
+    .info-default {
+        opacity: 0;
+    }
+
+    .info-hover {
+        opacity: 1;
+    }
 }
