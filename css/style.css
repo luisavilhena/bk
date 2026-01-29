@@ -2665,6 +2665,10 @@ footer .footer-about a {
 .page-template-page-tempo .header__content {
   background-color: transparent;
 }
+.home #logo-anchor svg,
+.page-template-page-tempo #logo-anchor svg {
+  fill: #ffffff;
+}
 .home #logo-anchor svg .cls-2,
 .page-template-page-tempo #logo-anchor svg .cls-2 {
   fill: #ffffff;
