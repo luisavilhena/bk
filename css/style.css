@@ -431,6 +431,9 @@ ul#main-menu > li:last-of-type {
   .menu-open {
     background-color: #808080;
   }
+  .menu-open #logo-anchor {
+    max-height: 64px;
+  }
   .menu-open #logo-anchor svg .cls-2 {
     fill: #ffffff;
   }
@@ -2664,6 +2667,10 @@ footer .footer-about a {
 .home .header__content,
 .page-template-page-tempo .header__content {
   background-color: transparent;
+}
+.home #logo-anchor,
+.page-template-page-tempo #logo-anchor {
+  color: white;
 }
 .home #logo-anchor svg,
 .page-template-page-tempo #logo-anchor svg {
