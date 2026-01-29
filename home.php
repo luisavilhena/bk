@@ -11,6 +11,17 @@ $filters = [
     'premiado'  => isset($_GET['premiado']) ? intval($_GET['premiado']) : 0,
 ];
 
+foreach ($filters as $filter_value) {
+    if ($filter_value) {
+        $term_args['tax_query'][] = [
+            'taxonomy' => 'category',
+            'field'    => 'term_id',
+            'terms'    => $filter_value,
+            'include_children' => false,
+        ];
+    }
+}
+
 $search_query   = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
 $posts_per_page = 12;
 $paged          = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
