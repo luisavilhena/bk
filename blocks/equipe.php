@@ -20,14 +20,18 @@ function bk_equipe_block() {
                LINHA 2 – GRID 3
             ===================== */
             Field::make('complex', 'team_members', 'Equipe')
-                ->set_layout('tabbed-vertical')
-                ->set_header_template('<%= title ? title : "Novo membro" %>')
                 ->add_fields([
                     Field::make('image', 'image', 'Foto'),
                     Field::make('text', 'title', 'Nome'),
-                    Field::make('text', 'subtitle', 'Cargo'),
+                    Field::make('rich_text', 'subtitle', 'Cargo'),
                     Field::make('rich_text', 'bio', 'Descrição'),
-                ]),
+                ])
+                ->set_layout('tabbed-vertical')
+                ->set_header_template( '
+                  <% if (title) { %>
+                      <%- title %>
+                  <% } %>
+              ' ),
 
             /* =====================
                LINHA 3 – GRID 2
@@ -40,11 +44,10 @@ function bk_equipe_block() {
                 ->add_fields([
                     Field::make('image', 'image', 'Foto'),
                     Field::make('text', 'title', 'Nome'),
-                    Field::make('textarea', 'subtitle', 'Cargo'),
+                    Field::make('rich_text', 'subtitle', 'Cargo'),
                     Field::make('rich_text', 'bio', 'Descrição'),
                 ]),
         ])
-
         ->set_render_callback(function ($block) {
         ?>
 
@@ -80,9 +83,9 @@ function bk_equipe_block() {
                         class="member"
                         data-title="<?= esc_attr($member['title']); ?>"
                         data-subtitle="<?= esc_attr($member['subtitle']); ?>"
-                        data-bio="<?= esc_attr(wp_strip_all_tags($member['bio'])); ?>"
+                        data-bio="<?= esc_attr($member['bio']); ?>"
                     >
-                        <?= wp_get_attachment_image($member['image'], 'medium'); ?>
+                        <?= wp_get_attachment_image($member['image'], 'full'); ?>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -119,7 +122,7 @@ function bk_equipe_block() {
                         class="member"
                         data-title="<?= esc_attr($member['title']); ?>"
                         data-subtitle="<?= esc_attr($member['subtitle']); ?>"
-                        data-bio="<?= esc_attr(wp_strip_all_tags($member['bio'])); ?>"
+                        data-bio="<?= esc_attr($member['bio']); ?>"
                     >
                         <?= wp_get_attachment_image($member['image'], 'medium'); ?>
                     </div>
@@ -135,7 +138,7 @@ function bk_equipe_block() {
 
     <!-- ===== LINHA 1 – HERO (SÓ IMAGEM) ===== -->
     <div class="equipe-mobile-hero">
-        <?= wp_get_attachment_image($block['hero_image'], 'large'); ?>
+        <?= wp_get_attachment_image($block['hero_image'], 'full'); ?>
     </div>
 
         <!-- ===== LINHA 3 – GRID 2 ===== -->
@@ -145,7 +148,7 @@ function bk_equipe_block() {
 
     <div class="mobile-highlight">
 
-        <?= wp_get_attachment_image($member['image'], 'medium'); ?>
+        <?= wp_get_attachment_image($member['image'], 'full'); ?>
 
         <div class="highlight-text">
             <h3><?= esc_html($member['title']); ?></h3>
@@ -185,7 +188,7 @@ function bk_equipe_block() {
             <div class="mobile-member">
 
                 <div class="mobile-member-image">
-                    <?= wp_get_attachment_image($member['image'], 'medium'); ?>
+                    <?= wp_get_attachment_image($member['image'], 'full'); ?>
                 </div>
 
                 <div class="mobile-member-text">

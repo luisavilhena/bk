@@ -1225,6 +1225,8 @@ footer .footer-about a {
 .equipe .equipe-grid .member img {
   width: 100%;
   display: block;
+  max-height: 550px;
+  object-fit: cover;
 }
 .equipe .equipe-grid .member:hover {
   filter: grayscale(0%);

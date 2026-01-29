@@ -722,8 +722,8 @@ jQuery(function ($) {
         const $grid   = $member.closest('.equipe-grid');
 
         $grid.find('.info-title').text($member.data('title'));
-        $grid.find('.info-subtitle').text($member.data('subtitle'));
-        $grid.find('.info-bio').text($member.data('bio'));
+        $grid.find('.info-subtitle').html($member.data('subtitle'));
+		$grid.find('.info-bio').html($member.data('bio'));
 
     });
 
@@ -731,44 +731,43 @@ jQuery(function ($) {
 
 document.querySelectorAll('.equipe-grid .member').forEach(member => {
 
-    member.addEventListener('mouseenter', () => {
-
-        const row  = member.closest('.equipe-grid');
-        const info = row.querySelector('.equipe-info');
-
-        if (!info) return;
-
-        const memberRect = member.getBoundingClientRect();
-        const rowRect    = row.getBoundingClientRect();
-
-        // 🔥 altura e posição iguais à imagem
-        info.style.top    = `${memberRect.top - rowRect.top}px`;
-        info.style.height = `${memberRect.height}px`;
-
-
-        // popula conteúdo
-        info.querySelector('.info-title').textContent =
-            member.dataset.title || '';
-
-        info.querySelector('.info-subtitle').textContent =
-            member.dataset.subtitle || '';
-
-        info.querySelector('.info-bio').textContent =
-            member.dataset.bio || '';
-
-        info.classList.add('active');
-    });
-
-    member.addEventListener('mouseleave', () => {
-        const row  = member.closest('.equipe-grid');
-        const info = row.querySelector('.equipe-info');
-
-        if (!info) return;
-
-        info.classList.remove('active');
-    });
-
-});
+	member.addEventListener('mouseenter', () => {
+  
+	  const row  = member.closest('.equipe-grid');
+	  const info = row.querySelector('.equipe-info');
+	  if (!info) return;
+  
+	  const memberRect = member.getBoundingClientRect();
+	  const rowRect    = row.getBoundingClientRect();
+  
+	  // altura e posição iguais à imagem
+	  info.style.top    = `${memberRect.top - rowRect.top}px`;
+	  info.style.height = `${memberRect.height}px`;
+  
+	  // popula conteúdo
+	  info.querySelector('.info-title').innerHTML =
+		member.dataset.title || '';
+  
+	  info.querySelector('.info-subtitle').innerHTML  =
+		member.dataset.subtitle || '';
+  
+	  // 🔥 AQUI É O PONTO IMPORTANTE
+	  info.querySelector('.info-bio').innerHTML =
+		member.dataset.bio || '';
+  
+	  info.classList.add('active');
+	});
+  
+	member.addEventListener('mouseleave', () => {
+	  const row  = member.closest('.equipe-grid');
+	  const info = row.querySelector('.equipe-info');
+	  if (!info) return;
+  
+	  info.classList.remove('active');
+	});
+  
+  });
+  
 jQuery(function ($) {
 
     $('.equipe-mobile').on('click', '.read-more', function () {
