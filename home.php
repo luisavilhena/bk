@@ -10,6 +10,12 @@ $filters = [
     'escala'    => isset($_GET['escala']) ? intval($_GET['escala']) : 0,
     'premiado'  => isset($_GET['premiado']) ? intval($_GET['premiado']) : 0,
 ];
+$tipologia = $filters['tipologia'];
+$local     = $filters['local'];
+$fase      = $filters['fase'];
+$decada    = $filters['decada'];
+$escala    = $filters['escala'];
+$premiado  = $filters['premiado'];
 
 foreach ($filters as $filter_value) {
     if ($filter_value) {
