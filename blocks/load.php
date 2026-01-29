@@ -2,7 +2,7 @@
 	require('textproject.php');
 	require('text-list.php');
 	require('carousel-team.php');
-	require('img-block.php');
+	require('contato.php');
 	require('carousel-arrow.php');
 	require('premiacoes.php');
 

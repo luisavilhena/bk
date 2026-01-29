@@ -130,6 +130,97 @@ function bk_equipe_block() {
     </div>
 
 </section>
+<!-- ================= MOBILE ================= -->
+<section class="equipe-mobile">
+
+    <!-- ===== LINHA 1 – HERO (SÓ IMAGEM) ===== -->
+    <div class="equipe-mobile-hero">
+        <?= wp_get_attachment_image($block['hero_image'], 'large'); ?>
+    </div>
+
+        <!-- ===== LINHA 3 – GRID 2 ===== -->
+        <div class="equipe-mobile-grid-2">
+
+<?php foreach ($block['team_highlights'] as $member): ?>
+
+    <div class="mobile-highlight">
+
+        <?= wp_get_attachment_image($member['image'], 'medium'); ?>
+
+        <div class="highlight-text">
+            <h3><?= esc_html($member['title']); ?></h3>
+            <p class="cargo"><?= esc_html($member['subtitle']); ?></p>
+
+            <div class="bio">
+                <?= wpautop($member['bio']); ?>
+            </div>
+        </div>
+
+    </div>
+
+<?php endforeach; ?>
+
+</div>
+
+    <!-- ===== LINHA 2 – GRID 3 → LISTA ===== -->
+    <div class="equipe-mobile-list">
+
+        <?php foreach ($block['team_members'] as $index => $member): ?>
+
+            <?php
+                $bio_raw = trim(wp_strip_all_tags($member['bio']));
+
+                $short = $bio_raw;
+                $full  = $bio_raw;
+
+                $pos = mb_strpos($bio_raw, '.');
+
+                if ($pos !== false) {
+                    $short = mb_substr($bio_raw, 0, $pos + 1);
+                    $full  = mb_substr($bio_raw, $pos + 1);
+                }
+
+            ?>
+
+            <div class="mobile-member">
+
+                <div class="mobile-member-image">
+                    <?= wp_get_attachment_image($member['image'], 'medium'); ?>
+                </div>
+
+                <div class="mobile-member-text">
+                    <div>
+                        <h3><?= esc_html($member['title']); ?></h3>
+                        <p class="cargo"><?= esc_html($member['subtitle']); ?></p>
+                    </div>
+                    <div>
+
+                        <div class="bio-short">
+                            <?= esc_html($short); ?>
+                        </div>
+
+                        <?php if (!empty(trim($full))) : ?>
+                            <div class="bio-full">
+                                <?= esc_html($full); ?>
+                            </div>
+                            <button class="read-more" type="button">
+                                Leia mais
+                            </button>
+
+                        <?php endif; ?>
+                    </div>
+                    </div>
+
+
+            </div>
+
+        <?php endforeach; ?>
+
+    </div>
+
+
+</section>
+
 
 
 <?php

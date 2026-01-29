@@ -18,6 +18,9 @@
     .col-right {
         width: 75%;
     }
+    .col-mobile {
+        display: none;
+    }
 
     .columns {
         display: grid;
@@ -33,4 +36,36 @@
         font-weight: 300;
         line-height: 1.25;
     }
+
+}
+@media (max-width: 768px) {
+
+    .ex-bks {
+        display: flex;
+        flex-direction: column;
+        .col-right {
+            display: none;
+        }
+        .col-mobile {
+            width: 100%;
+            display: block;
+            .columns {
+                display: flex;
+                flex-direction: row;
+            }
+            .column {
+                width: 50%;
+                min-width: 0;          // 🔥 ESSENCIAL
+                word-break: break-word;
+                overflow-wrap: break-word;
+                white-space: normal;
+                p {
+                    font-size: 12px;
+                }
+            }
+        }
+
+
+    }
+
 }

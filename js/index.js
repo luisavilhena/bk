@@ -769,3 +769,20 @@ document.querySelectorAll('.equipe-grid .member').forEach(member => {
     });
 
 });
+jQuery(function ($) {
+
+    $('.equipe-mobile').on('click', '.read-more', function () {
+
+        const $member = $(this).closest('.mobile-member');
+
+        $member.toggleClass('open');
+
+        if ($member.hasClass('open')) {
+            $(this).text('Leia menos');
+        } else {
+            $(this).text('Leia mais');
+        }
+
+    });
+
+});

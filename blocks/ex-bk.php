@@ -51,6 +51,20 @@ function bk_ex_bks_block() {
 
                     </div>
                 </div>
+                <div class="col-mobile">
+                    <div class="columns">
+
+                        <div class="column">
+                            <p><?php echo nl2br($block['col_1']); ?></p>
+                            <p><?php echo nl2br($block['col_2']); ?></p>
+                        </div>
+
+                        <div class="column">
+                            <p><?php echo nl2br($block['col_3']); ?></p>
+                            <p><?php echo nl2br($block['col_4']); ?></p>
+                        </div>
+                    </div>
+                </div>
 
             </section>
             <?php
