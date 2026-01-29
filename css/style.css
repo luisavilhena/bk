@@ -234,7 +234,7 @@
 .columns-container {
   display: flex;
   gap: 30px;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 130px);
 }
 .columns-container.without-height {
   flex: 1;
@@ -1716,14 +1716,16 @@ footer .footer-about a {
 .filter #filtro-categorias .blocos .bloco .selections .sibling.active .category-list-item {
   padding: 5px;
 }
-.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item {
+.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item,
+.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item-2 {
   position: relative;
   font-weight: 300;
   white-space: nowrap;
   cursor: pointer;
   font-variation-settings: "wght" 300;
 }
-.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item::after {
+.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item::after,
+.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item-2::after {
   content: attr(data-text);
   font-weight: 900;
   white-space: nowrap;
@@ -1732,10 +1734,12 @@ footer .footer-about a {
   height: 0;
   overflow: hidden;
 }
-.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item:hover {
+.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item:hover,
+.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item-2:hover {
   font-variation-settings: "wght" 900;
 }
-.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item a {
+.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item a,
+.filter #filtro-categorias .blocos .bloco .selections .sibling .category-list-item-2 a {
   text-decoration: none;
 }
 .filter #filtro-categorias .blocos .bloco .selections .sibling.single li.category-list-item:hover {
@@ -2864,6 +2868,7 @@ footer .footer-about a {
   font-weight: 300;
   margin-bottom: 20px;
   color: #464646;
+  line-height: 24px;
 }
 #single-projetos h3,
 #single-projetos h2,
@@ -2872,8 +2877,12 @@ footer .footer-about a {
   font-weight: 300;
   text-transform: uppercase;
 }
-#single-projetos p {
+#single-projetos .excerpt {
   margin-bottom: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: #464646;
 }
 #single-projetos .next-project {
   position: absolute;

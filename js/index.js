@@ -107,13 +107,23 @@ $(document).ready(function(){
 		fade: true,
 	});
 	$('#carousel-arrow-item').slick({
-			slidesToShow: 1,
-			slidesToScroll: 1,
-			autoplay: true,
-			autoplaySpeed: 2000,
-			speed: 2000,
-			dots: true,
-			fade: true,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+	  
+		autoplay: true,
+		autoplaySpeed: 1000,
+		speed: 1000,
+	  
+		dots: true,
+	  
+		swipe: true,    
+		swipeToSlide: true,
+		touchMove: true,
+	  
+		draggable: true,
+	  
+		fade: false,          // fade quebra swipe/drag
+		cssEase: 'ease',
 		});
 	$('#carousel-project').slick({
 		centerMode: true,

@@ -250,12 +250,12 @@ function render_single_filter_block($args) {
                         <ul class="sibling">
                             <!-- reset -->
                             <li
-                                class="category-list-item is-reset">
-                                Linha do Tempo
+                                class="category-list-item-2">
+                                <a href="<?php echo esc_url( get_permalink( get_page_by_path('linha-do-tempo') ) ); ?>">Linha do Tempo</a>
                             </li>
                             <li
-                                class="category-list-item is-reset">
-                                <a href="">Galeria de fotos</a>
+                                class="category-list-item-2">
+                                <a href="/">Galeria de fotos</a>
                             </li>
                         </ul>
 
@@ -324,7 +324,7 @@ function render_single_filter_block($args) {
 
                     $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'horizontal');
                     $post_url = get_permalink();
-                    $excerpt = get_the_excerpt();
+                    $excerpt = get_the_tags();
                     $categories = get_the_terms(get_the_ID(), 'category');
 
                     $category_names = array();
@@ -347,7 +347,17 @@ function render_single_filter_block($args) {
                         <div class="project-list__item-description">
                             <h2 class="post-title">
                                 <?php the_title(); ?></h2>
-                            <p><?php echo $excerpt; ?></p>
+                            <p>
+                                <?php
+                                    $tags = get_the_tags();
+
+                                    if ($tags) {
+                                        foreach ($tags as $tag) {
+                                        echo esc_html($tag->name);
+                                        }
+                                    }
+                                ?>
+                            </p>
                         </div>
                         </a>
                     <?php

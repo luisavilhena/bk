@@ -25,11 +25,21 @@ get_header(); ?>
 ?>
 
 
-<div id="single-projetos"class="single-projetos structure-container">
+<div id="single-projetos"class="single-projetos structure-container structure-container-bigger">
 	<div class="columns-container">
 		<div class="column-left">
 			<h2 class="title"><?php the_title(); ?></h2>
-            <div class="excerpt"><?php the_excerpt(); ?></div>
+            <div class="excerpt">
+                <?php
+                $tags = get_the_tags();
+
+                if ($tags) {
+                    foreach ($tags as $tag) {
+                    echo esc_html($tag->name);
+                    }
+                }
+                ?>
+                </div>
 			<?php
 				$descricao = get_field('descricao_do_projeto');
 				$especificidade = get_field('especificidade_projeto');

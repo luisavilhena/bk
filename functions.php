@@ -384,7 +384,17 @@ function filtrar_posts_por_categoria() {
                     <h2 class="post-title">
                         <?php the_title(); ?>
                     </h2>
-                    <p><?php echo $excerpt; ?></p>
+                    <p>
+                    <?php
+                        $tags = get_the_tags();
+
+                        if ($tags) {
+                            foreach ($tags as $tag) {
+                            echo esc_html($tag->name);
+                            }
+                        }
+                    ?>
+                    </p>
                 </div>
                 </a>
             <?php
@@ -437,7 +447,17 @@ function custom_search() {
             <?php endif; ?>
             <div class="project-list__item-description">
                 <h2 class="post-title"><a href="<?php echo esc_url($post_url); ?>"><?php the_title(); ?></a></h2>
-                <p><?php echo $excerpt; ?></p>
+                <p>
+                <?php
+                    $tags = get_the_tags();
+
+                    if ($tags) {
+                        foreach ($tags as $tag) {
+                        echo esc_html($tag->name);
+                        }
+                    }
+                ?>
+                </p>
             </div>
         </div>
         <?php
@@ -566,7 +586,17 @@ function load_more_posts() {
 
                 <div class="project-list__item-description">
                     <h2 class="post-title"><?php the_title(); ?></h2>
-                    <p><?php echo esc_html($excerpt); ?></p>
+                    <p>
+                    <?php
+                        $tags = get_the_tags();
+
+                        if ($tags) {
+                            foreach ($tags as $tag) {
+                            echo esc_html($tag->name);
+                            }
+                        }
+                    ?>
+                    </p>
                 </div>
             </a>
 

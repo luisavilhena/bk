@@ -90,7 +90,7 @@ krsort($projects_by_year, SORT_NUMERIC);
                             </li>
                             <li
                                 class="category-list-item is-reset">
-                                <a href="/projetos">Galeria de fotos </a>
+                                <a href="<?php echo esc_url( get_permalink( get_page_by_path('projetos') ) ); ?>">Galeria de fotos </a>
                             </li>
                         </ul>
                     </div>
