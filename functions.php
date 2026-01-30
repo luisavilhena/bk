@@ -310,7 +310,41 @@ function custom_taxonomy_publicacao() {
 }
 add_action( 'init', 'custom_taxonomy_publicacao' );
 
-
+// Campo Ordem - adicionar
+add_action('publicacao_add_form_fields', function () {
+    ?>
+    <div class="form-field">
+      <label for="term_order">Ordem</label>
+      <input type="number" name="term_order" id="term_order" value="0">
+      <p class="description">Define a ordem de exibição.</p>
+    </div>
+    <?php
+  });
+  
+  // Campo Ordem - editar
+  add_action('publicacao_edit_form_fields', function ($term) {
+    $order = get_term_meta($term->term_id, 'term_order', true);
+    ?>
+    <tr class="form-field">
+      <th scope="row"><label for="term_order">Ordem</label></th>
+      <td>
+        <input type="number" name="term_order" id="term_order" value="<?php echo esc_attr($order); ?>">
+        <p class="description">Define a ordem de exibição.</p>
+      </td>
+    </tr>
+    <?php
+  });
+  
+  // Salvar campo Ordem
+  add_action('created_publicacao', 'save_publicacao_order');
+  add_action('edited_publicacao', 'save_publicacao_order');
+  
+  function save_publicacao_order($term_id) {
+    if (isset($_POST['term_order'])) {
+      update_term_meta($term_id, 'term_order', intval($_POST['term_order']));
+    }
+  }
+  
 //add breadcrumb
 function get_breadcrumb() {
     echo ' <div class="breadcrumb structure-container" >

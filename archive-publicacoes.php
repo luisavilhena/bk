@@ -6,7 +6,12 @@
 $terms = get_terms([
     'taxonomy'   => 'publicacao',
     'hide_empty' => true,
-]);
+  
+    'meta_key'   => 'term_order',
+    'orderby'    => 'meta_value_num',
+    'order'      => 'DESC',
+  ]);
+  
 
 foreach ($terms as $term) :
 ?>
