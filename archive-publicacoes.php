@@ -54,10 +54,15 @@ foreach ($terms as $term) :
                             <!-- IMAGEM -->
                             <?php if (has_post_thumbnail()) : ?>
                                 <div class="publicacao-thumb">
-                                    <div class="normal">
-                                        <?php the_post_thumbnail('medium_large'); ?>
-                                    </div>
-                                    
+                                <div class="normal">
+                                <a
+                                    href="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>"
+                                    class="publicacao-lightbox-trigger"
+                                    data-group="<?php echo esc_attr($term->term_id); ?>"
+                                >
+                                    <?php the_post_thumbnail('medium_large'); ?>
+                                </a>
+                                </div>
                                     <div class="hover">
                                         <?php the_content(); ?>
                                     </div>

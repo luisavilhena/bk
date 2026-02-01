@@ -25,10 +25,10 @@ function carousel_description() {
 					<div class="carousel-arrow-item__item">
 						<?php if ($carousel['img']) : ?>
 							<a
-									href="<?php echo wp_get_attachment_image_src($carousel['img'],'full')[0]; ?>"
-									class="carousel-lightbox-trigger"
-									data-index="<?php echo esc_attr($index); ?>"
-									>
+								href="<?php echo wp_get_attachment_image_src($carousel['img'],'full')[0]; ?>"
+								class="carousel-lightbox-trigger"
+								data-index="<?php echo esc_attr($index); ?>"
+							>
 
 							<img
 							decoding="async"

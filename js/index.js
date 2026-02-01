@@ -146,15 +146,17 @@ jQuery(function ($) {
 	// ================================
 	// VARIÁVEIS
 	// ================================
-	let imagesByIndex = {};
+	let images = {};
+	let order = [];
 	let currentIndex = 0;
 	let isDragging = false;
+	let currentGroup = null;
   
-	const lightbox   = $('#carousel-lightbox');
+	const lightbox    = $('#carousel-lightbox');
 	const lightboxImg = $('#carousel-lightbox img');
   
 	// ================================
-	// DETECTA SWIPE (MOBILE)
+	// DETECTA SWIPE (SÓ NO CARROSSEL)
 	// ================================
 	$('#carousel-arrow-item')
 	  .on('touchstart', function () {
@@ -165,48 +167,64 @@ jQuery(function ($) {
 	  });
   
 	// ================================
-	// COLETA IMAGENS REAIS (SEM CLONES)
+	// COLETA IMAGENS (GENÉRICO)
 	// ================================
-	function collectImages() {
-	  imagesByIndex = {};
+	function collectImages(trigger) {
+	  images = {};
+	  order = [];
   
-	  $('#carousel-arrow-item .carousel-arrow-item__item:not(.slick-cloned)')
-		.find('.carousel-lightbox-trigger')
-		.each(function () {
+	  // 👉 CASO 1: CARROSSEL (data-index)
+	  if ($(trigger).data('index') !== undefined) {
   
-		  const index = parseInt($(this).data('index'), 10);
-		  const href  = $(this).attr('href');
+		$('#carousel-arrow-item .carousel-arrow-item__item:not(.slick-cloned)')
+		  .find('.carousel-lightbox-trigger')
+		  .each(function () {
+			const index = parseInt($(this).data('index'), 10);
+			const href  = $(this).attr('href');
   
-		  if (!isNaN(index)) {
-			imagesByIndex[index] = href;
-		  }
-		});
+			if (!isNaN(index)) {
+			  images[index] = href;
+			}
+		  });
+  
+		order = Object.keys(images).map(Number).sort((a, b) => a - b);
+		currentIndex = parseInt($(trigger).data('index'), 10);
+		currentGroup = null;
+		return;
+	  }
+  
+	  // 👉 CASO 2: ARCHIVE / GRID (data-group)
+	  if ($(trigger).data('group') !== undefined) {
+  
+		currentGroup = $(trigger).data('group');
+  
+		$('.carousel-lightbox-trigger[data-group="' + currentGroup + '"]')
+		  .each(function (i) {
+			images[i] = $(this).attr('href');
+			order.push(i);
+		  });
+  
+		currentIndex = $('.carousel-lightbox-trigger[data-group="' + currentGroup + '"]')
+		  .index(trigger);
+	  }
 	}
   
 	// ================================
 	// ABRIR LIGHTBOX
 	// ================================
-	function openLightbox(index) {
-	  if (!imagesByIndex[index]) return;
+	function openLightbox() {
+	  if (!images[currentIndex]) return;
   
-	  currentIndex = index;
-  
-	  lightboxImg.attr('src', imagesByIndex[currentIndex]);
-	  lightbox
-		.addClass('is-open')
-		.attr('aria-hidden', 'false');
-  
+	  lightboxImg.attr('src', images[currentIndex]);
+	  lightbox.addClass('is-open').attr('aria-hidden', 'false');
 	  $('body').css('overflow', 'hidden');
 	}
   
 	// ================================
-	// FECHAR LIGHTBOX
+	// FECHAR
 	// ================================
 	function closeLightbox() {
-	  lightbox
-		.removeClass('is-open')
-		.attr('aria-hidden', 'true');
-  
+	  lightbox.removeClass('is-open').attr('aria-hidden', 'true');
 	  lightboxImg.attr('src', '');
 	  $('body').css('overflow', '');
 	}
@@ -214,34 +232,23 @@ jQuery(function ($) {
 	// ================================
 	// NAVEGAÇÃO
 	// ================================
-	function getIndexes() {
-	  return Object.keys(imagesByIndex)
-		.map(Number)
-		.sort((a, b) => a - b);
-	}
-  
 	function nextImage() {
-	  const keys = getIndexes();
-	  const pos  = keys.indexOf(currentIndex);
-	  const next = keys[pos + 1] ?? keys[0];
-	  openLightbox(next);
+	  const pos = order.indexOf(currentIndex);
+	  currentIndex = order[pos + 1] ?? order[0];
+	  openLightbox();
 	}
   
 	function prevImage() {
-	  const keys = getIndexes();
-	  const pos  = keys.indexOf(currentIndex);
-	  const prev = keys[pos - 1] ?? keys[keys.length - 1];
-	  openLightbox(prev);
+	  const pos = order.indexOf(currentIndex);
+	  currentIndex = order[pos - 1] ?? order[order.length - 1];
+	  openLightbox();
 	}
   
 	// ================================
 	// EVENTOS
 	// ================================
-  
-	// TAP / CLICK NA IMAGEM
 	$(document).on('click touchend', '.carousel-lightbox-trigger', function (e) {
   
-	  // se foi swipe, não abre
 	  if (isDragging) {
 		isDragging = false;
 		return;
@@ -249,17 +256,13 @@ jQuery(function ($) {
   
 	  e.preventDefault();
   
-	  collectImages(); // sincroniza com DOM real
-  
-	  const index = parseInt($(this).data('index'), 10);
-	  openLightbox(index);
+	  collectImages(this);
+	  openLightbox();
 	});
   
-	// FECHAR
 	$('.carousel-lightbox__overlay, .carousel-lightbox__close')
 	  .on('click', closeLightbox);
   
-	// NAVEGAÇÃO POR BOTÕES
 	$('.carousel-lightbox__nav.next')
 	  .on('click', function (e) {
 		e.stopPropagation();
@@ -272,16 +275,16 @@ jQuery(function ($) {
 		prevImage();
 	  });
   
-	// TECLADO
 	$(document).on('keydown', function (e) {
 	  if (!lightbox.hasClass('is-open')) return;
   
-	  if (e.key === 'Escape')    closeLightbox();
+	  if (e.key === 'Escape') closeLightbox();
 	  if (e.key === 'ArrowRight') nextImage();
-	  if (e.key === 'ArrowLeft')  prevImage();
+	  if (e.key === 'ArrowLeft') prevImage();
 	});
   
   });
+  
   
   
   

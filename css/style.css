@@ -2411,7 +2411,7 @@ footer .footer-about a {
   width: 300px;
   height: 230px;
   /* 🔥 altura fixa = zero pulo */
-  margin: 0 5px;
+  margin: 0 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2444,7 +2444,7 @@ footer .footer-about a {
 }
 .archive-publicacoes .publicacao-group .publicacoes-list .publicacao-thumb img {
   height: 230px;
-  width: auto;
+  width: 100%;
   object-fit: contain;
 }
 .archive-publicacoes .publicacao-group .publicacoes-list .text {
@@ -2855,6 +2855,9 @@ footer .footer-about a {
 .project-list .project-list__item .project-list__item-description p {
   font-size: 16px;
   color: #000;
+}
+.project-list .project-list__item:hover img {
+  filter: grayscale(0);
 }
 .project-list .project-list__item:hover .project-list__item-description {
   transform: translateY(0);
