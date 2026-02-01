@@ -110,21 +110,27 @@ $(document).ready(function(){
 		slidesToShow: 1,
 		slidesToScroll: 1,
 	  
+		infinite: true,
+	  
 		autoplay: true,
-		autoplaySpeed: 1000,
-		speed: 1000,
+		autoplaySpeed: 3000, // 👈 tempo de leitura
+		speed: 600,          // 👈 só a animação
 	  
 		dots: true,
+		arrows: true,
 	  
-		swipe: true,    
-		swipeToSlide: true,
+		swipe: true,
 		touchMove: true,
-	  
 		draggable: true,
 	  
-		fade: false,          // fade quebra swipe/drag
-		cssEase: 'ease',
-		});
+		swipeToSlide: false,
+	  
+		pauseOnHover: false,
+		pauseOnFocus: false,
+	  });
+	  
+	  
+		
 	$('#carousel-project').slick({
 		centerMode: true,
 		slidesToShow: 1,
@@ -135,6 +141,152 @@ $(document).ready(function(){
 		dots: true,
 	});
 });
+jQuery(function ($) {
+
+	// ================================
+	// VARIÁVEIS
+	// ================================
+	let imagesByIndex = {};
+	let currentIndex = 0;
+	let isDragging = false;
+  
+	const lightbox   = $('#carousel-lightbox');
+	const lightboxImg = $('#carousel-lightbox img');
+  
+	// ================================
+	// DETECTA SWIPE (MOBILE)
+	// ================================
+	$('#carousel-arrow-item')
+	  .on('touchstart', function () {
+		isDragging = false;
+	  })
+	  .on('touchmove', function () {
+		isDragging = true;
+	  });
+  
+	// ================================
+	// COLETA IMAGENS REAIS (SEM CLONES)
+	// ================================
+	function collectImages() {
+	  imagesByIndex = {};
+  
+	  $('#carousel-arrow-item .carousel-arrow-item__item:not(.slick-cloned)')
+		.find('.carousel-lightbox-trigger')
+		.each(function () {
+  
+		  const index = parseInt($(this).data('index'), 10);
+		  const href  = $(this).attr('href');
+  
+		  if (!isNaN(index)) {
+			imagesByIndex[index] = href;
+		  }
+		});
+	}
+  
+	// ================================
+	// ABRIR LIGHTBOX
+	// ================================
+	function openLightbox(index) {
+	  if (!imagesByIndex[index]) return;
+  
+	  currentIndex = index;
+  
+	  lightboxImg.attr('src', imagesByIndex[currentIndex]);
+	  lightbox
+		.addClass('is-open')
+		.attr('aria-hidden', 'false');
+  
+	  $('body').css('overflow', 'hidden');
+	}
+  
+	// ================================
+	// FECHAR LIGHTBOX
+	// ================================
+	function closeLightbox() {
+	  lightbox
+		.removeClass('is-open')
+		.attr('aria-hidden', 'true');
+  
+	  lightboxImg.attr('src', '');
+	  $('body').css('overflow', '');
+	}
+  
+	// ================================
+	// NAVEGAÇÃO
+	// ================================
+	function getIndexes() {
+	  return Object.keys(imagesByIndex)
+		.map(Number)
+		.sort((a, b) => a - b);
+	}
+  
+	function nextImage() {
+	  const keys = getIndexes();
+	  const pos  = keys.indexOf(currentIndex);
+	  const next = keys[pos + 1] ?? keys[0];
+	  openLightbox(next);
+	}
+  
+	function prevImage() {
+	  const keys = getIndexes();
+	  const pos  = keys.indexOf(currentIndex);
+	  const prev = keys[pos - 1] ?? keys[keys.length - 1];
+	  openLightbox(prev);
+	}
+  
+	// ================================
+	// EVENTOS
+	// ================================
+  
+	// TAP / CLICK NA IMAGEM
+	$(document).on('click touchend', '.carousel-lightbox-trigger', function (e) {
+  
+	  // se foi swipe, não abre
+	  if (isDragging) {
+		isDragging = false;
+		return;
+	  }
+  
+	  e.preventDefault();
+  
+	  collectImages(); // sincroniza com DOM real
+  
+	  const index = parseInt($(this).data('index'), 10);
+	  openLightbox(index);
+	});
+  
+	// FECHAR
+	$('.carousel-lightbox__overlay, .carousel-lightbox__close')
+	  .on('click', closeLightbox);
+  
+	// NAVEGAÇÃO POR BOTÕES
+	$('.carousel-lightbox__nav.next')
+	  .on('click', function (e) {
+		e.stopPropagation();
+		nextImage();
+	  });
+  
+	$('.carousel-lightbox__nav.prev')
+	  .on('click', function (e) {
+		e.stopPropagation();
+		prevImage();
+	  });
+  
+	// TECLADO
+	$(document).on('keydown', function (e) {
+	  if (!lightbox.hasClass('is-open')) return;
+  
+	  if (e.key === 'Escape')    closeLightbox();
+	  if (e.key === 'ArrowRight') nextImage();
+	  if (e.key === 'ArrowLeft')  prevImage();
+	});
+  
+  });
+  
+  
+  
+  
+  
 jQuery(function ($) {
 
     $('.publicacoes-list').each(function () {

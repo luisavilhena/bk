@@ -88,6 +88,17 @@
 
 		</div>
 	</div>
+	<div id="carousel-lightbox" aria-hidden="true">
+		<div class="carousel-lightbox__overlay"></div>
+
+		<div class="carousel-lightbox__content">
+			<button class="carousel-lightbox__close">×</button>
+			<button class="carousel-lightbox__nav prev">‹</button>
+			<img src="" alt="">
+			<button class="carousel-lightbox__nav next">›</button>
+		</div>
+	</div>
+
 
 
 </footer>

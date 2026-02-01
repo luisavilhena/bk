@@ -49,9 +49,16 @@
 //     display: none;
 // }
 .structure-container {
-    padding: 100px 20px 0px 20px;
+    padding: 150px 20px 0px 20px;
     &.structure-container-bigger {
         padding: 150px 20px 0px 20px;
+    }
+    @media screen and (max-width: @screen-md-2) {
+        padding: 80px 20px 0px 20px;
+        &.structure-container-bigger {
+            padding: 80px 20px 0px 20px;
+
+        }
     }
 }
 .columns-container {

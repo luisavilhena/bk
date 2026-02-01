@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main class="archive-publicacoes structure-container">
+<main class="archive-publicacoes structure-container structure-container-bigger">
 
 <?php
 $terms = get_terms([

@@ -21,13 +21,26 @@ function carousel_description() {
 			?>
 			<div id="carousel-arrow" class="carousel-main">
 				<div id="carousel-arrow-item">
-					<?php foreach ($block['carousel'] as $carousel) : ?>
-						<div class="carousel-arrow-item__item">
+				<?php foreach ($block['carousel'] as $index => $carousel) : ?>
+					<div class="carousel-arrow-item__item">
 						<?php if ($carousel['img']) : ?>
-							<img class="carousel-arrow-item__img" data-featherlight="<?php echo wp_get_attachment_image_src($carousel['img'],'ap_image_desktop_full_no_crop')[0]; ?>" src="<?php echo wp_get_attachment_image_src($carousel['img'],'image_desktop_full_no_crop')[0]; ?>">
+							<a
+									href="<?php echo wp_get_attachment_image_src($carousel['img'],'full')[0]; ?>"
+									class="carousel-lightbox-trigger"
+									data-index="<?php echo esc_attr($index); ?>"
+									>
+
+							<img
+							decoding="async"
+							class="carousel-arrow-item__img"
+							src="<?php echo wp_get_attachment_image_src($carousel['img'],'image_desktop_full_no_crop')[0]; ?>"
+							alt=""
+							>
+						</a>
 						<?php endif; ?>
-						</div>
-					<?php endforeach;  ?>					
+					</div>
+					<?php endforeach; ?>
+				
 				</div>
 			</div>
 			<?php

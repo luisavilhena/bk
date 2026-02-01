@@ -1,12 +1,5 @@
 <?php
 
-add_action('wp_ajax_filtrar_posts_por_categoria', function () {
-    wp_die('AJAX FUNCIONANDO');
-});
-
-add_action('wp_ajax_nopriv_filtrar_posts_por_categoria', function () {
-    wp_die('AJAX FUNCIONANDO');
-});
 add_action('wp_enqueue_scripts', 'bk');
 function bk() {
     // garante estilos do core
@@ -566,7 +559,7 @@ function load_more_posts() {
     }
 
     $offset   = isset($_POST['offset']) ? max(0, intval($_POST['offset'])) : 0;
-    $per_page = 4;
+    $per_page = 12;
 
     $args = [
         'post_type'           => 'post',
