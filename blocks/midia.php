@@ -62,22 +62,25 @@ function midia() {
 
                             <?php echo $topics['description']; ?>
                         </div>
+                        <?php if ($topics['link_internal']) : ?>
                         <div class="btn-container">
                             <a href="<?php echo esc_url(get_permalink($topics['link_internal'][0]['id'])); ?>" class="btn">
                                 <?php echo esc_html($topics['btn']); ?>
                             </a>
-                        </div>  
+                        </div> 
+                        <?php endif; ?>
                     </div>
 
                     <div class="topic-image">
+                        <?php if($topics['link_url']): ?>
                         <a href="<?php echo esc_url($topics['link_url']); ?>" target="_blank" rel="noopener noreferrer">
                             <img src="<?php echo esc_url($img_url); ?>" alt="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="51" height="65" viewBox="0 0 51 65" fill="none">
                                 <path d="M0 64.1667V0L50.4167 32.0833L0 64.1667Z" fill="white"/>
                             </svg>
                         </a>
+                        <?php endif; ?>
                     </div>
-
                 </div>
                 <?php endforeach; ?>
             </div>

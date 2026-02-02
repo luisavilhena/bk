@@ -2499,6 +2499,7 @@ footer .footer-about a {
 }
 .midia-container .midia-bloco .topic-content a {
   transition: all 0.3s ease;
+  display: inline;
 }
 .midia-container .midia-bloco .topic-content a:hover {
   font-weight: 900;
