@@ -144,24 +144,24 @@ function bk_equipe_block() {
         <!-- ===== LINHA 3 – GRID 2 ===== -->
         <div class="equipe-mobile-grid-2">
 
-<?php foreach ($block['team_highlights'] as $member): ?>
+        <?php foreach ($block['team_highlights'] as $member): ?>
 
-    <div class="mobile-highlight">
+            <div class="mobile-highlight">
 
-        <?= wp_get_attachment_image($member['image'], 'full'); ?>
+                <?= wp_get_attachment_image($member['image'], 'full'); ?>
 
-        <div class="highlight-text">
-            <h3><?= esc_html($member['title']); ?></h3>
-            <p class="cargo"><?= esc_html($member['subtitle']); ?></p>
+                <div class="highlight-text">
+                    <h3><?= esc_html($member['title']); ?></h3>
+                    <p class="cargo"><?= wpautop($member['subtitle']); ?></p>
 
-            <div class="bio">
-                <?= wpautop($member['bio']); ?>
+                    <div class="bio">
+                        <?= wpautop($member['bio']); ?>
+                    </div>
+                </div>
+
             </div>
-        </div>
 
-    </div>
-
-<?php endforeach; ?>
+        <?php endforeach; ?>
 
 </div>
 
@@ -194,7 +194,7 @@ function bk_equipe_block() {
                 <div class="mobile-member-text">
                     <div>
                         <h3><?= esc_html($member['title']); ?></h3>
-                        <p class="cargo"><?= esc_html($member['subtitle']); ?></p>
+                        <p class="cargo"><?= wpautop($member['subtitle']) ?></p>
                     </div>
                     <div>
 
@@ -204,7 +204,7 @@ function bk_equipe_block() {
 
                         <?php if (!empty(trim($full))) : ?>
                             <div class="bio-full">
-                                <?= esc_html($full); ?>
+                                <?= wpautop($member['bio']); ?>
                             </div>
                             <button class="read-more" type="button">
                                 Leia mais

@@ -78,14 +78,14 @@ krsort($projects_by_year, SORT_NUMERIC);
                 <div class="selections">
                     <div>
                         <span class="category">
-                            Linha do Tempo
+                            Linha do tempo
                             <?php echo $svg_path; ?>
                         </span>
 
                         <ul class="sibling">
                             <li
                                 class="category-list-item is-reset">
-                                Linha do Tempo
+                                Linha do tempo
 
                             </li>
                             <li

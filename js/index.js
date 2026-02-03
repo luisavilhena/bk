@@ -950,3 +950,13 @@ jQuery(function ($) {
     });
 
 });
+document.querySelectorAll('#timeline-page .text h2').forEach(el => {
+	el.textContent = el.textContent
+	  .toLowerCase()
+	  .split(' ')
+	  .map(word =>
+		word.charAt(0).toUpperCase() + word.slice(1)
+	  )
+	  .join(' ');
+  });
+  
