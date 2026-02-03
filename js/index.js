@@ -97,7 +97,7 @@ $(document).ready(function(){
 			});
 });
 
-$(document).ready(function(){
+jQuery(window).on('load', function () {
 	$('#carousel-main-item').slick({
 		slidesToShow: 1,
 		slidesToScroll: 1,

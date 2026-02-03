@@ -272,7 +272,7 @@ function render_single_filter_block($args) {
                             </li>
                             <li
                                 class="category-list-item-2">
-                                <a href="/">Galeria de fotos</a>
+                                <a href="<?php echo esc_url( get_permalink( get_page_by_path('projetos') ) ); ?>">Galeria de fotos</a>
                             </li>
                         </ul>
 
@@ -332,7 +332,7 @@ function render_single_filter_block($args) {
 
 </div>
 
-<div id="category" class="structure-container structure-container-bigger ">
+<div id="category" class="structure-container structure-container-bigger min-height">
     <div class="structure-container__content structure-container__side">
         <div id="resultado-posts" class="project-list">
             <?php

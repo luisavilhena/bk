@@ -75,8 +75,8 @@ function midia() {
                         <?php if($topics['link_url']): ?>
                         <a href="<?php echo esc_url($topics['link_url']); ?>" target="_blank" rel="noopener noreferrer">
                             <img src="<?php echo esc_url($img_url); ?>" alt="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="51" height="65" viewBox="0 0 51 65" fill="none">
-                                <path d="M0 64.1667V0L50.4167 32.0833L0 64.1667Z" fill="white"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="37" height="32" viewBox="0 0 37 32" fill="none">
+                                <path d="M20.6321 31.8182L17.8977 29.1193L29.1548 17.8622H0V13.956H29.1548L17.8977 2.73438L20.6321 0L36.5412 15.9091L20.6321 31.8182Z" fill="#464646"/>
                             </svg>
                         </a>
                         <?php endif; ?>

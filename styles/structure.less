@@ -61,6 +61,12 @@
         }
     }
 }
+.min-height {
+    min-height: calc(100vh - 160px);
+    @media screen and (max-width: @screen-md-2) {
+        min-height: 80vh;
+    }
+}
 .columns-container {
     display: flex;
     gap: 30px;
