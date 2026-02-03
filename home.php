@@ -268,7 +268,7 @@ function render_single_filter_block($args) {
                             <!-- reset -->
                             <li
                                 class="category-list-item-2">
-                                <a href="<?php echo esc_url( get_permalink( get_page_by_path('linha-do-tempo') ) ); ?>">Linha do Tempo</a>
+                                <a href="<?php echo esc_url( get_permalink( get_page_by_path('linha-do-tempo') ) ); ?>">Linha do tempo</a>
                             </li>
                             <li
                                 class="category-list-item-2">

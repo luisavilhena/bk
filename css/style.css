@@ -1922,6 +1922,9 @@ footer .footer-about a {
 #filtro-categorias .blocos .bloco .selections {
   position: relative;
 }
+#filtro-categorias .blocos .bloco .selections:first-of-type ul.sibling {
+  left: 0;
+}
 #filtro-categorias .blocos .bloco ul.sibling {
   position: absolute;
   flex-direction: column;
@@ -2617,7 +2620,7 @@ footer .footer-about a {
   display: grid;
   grid-template-columns: 25% 75%;
   padding: 14px 0;
-  border-bottom: 2px solid #464646;
+  border-bottom: 1px solid #464646;
   font-family: 'Inter', sans-serif;
   color: #464646;
 }
@@ -2658,11 +2661,11 @@ footer .footer-about a {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
-  border-bottom: 1px solid #464646;
+  border-bottom: 1px solid #CBCBCB;
   margin-left: 30px;
 }
 .premios-grid .premios-row.year-end {
-  border-bottom: 2px solid #464646;
+  border-bottom: 1px solid #464646;
 }
 .premios-grid .premios-row.year-end .col-right {
   border-bottom: none;
