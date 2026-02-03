@@ -1112,7 +1112,6 @@ footer #footer-container {
   display: none;
 }
 footer .footer-content {
-  max-width: 1700px;
   display: flex;
   justify-content: space-between;
 }
