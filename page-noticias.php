@@ -150,7 +150,7 @@
                             <div class="item-right">
                                 <?php if (!empty($block['image'])) : ?>
                                     <div class="image">
-                                        <?php echo wp_get_attachment_image($block['image'], 'medium'); ?>
+                                        <?php echo wp_get_attachment_image($block['image'], 'full'); ?>
                                     </div>
                                 <?php endif; ?>
                             </div>

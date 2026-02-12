@@ -3923,6 +3923,7 @@ q p:last-of-type {
   gap: 60px;
   border-bottom: #464646 1px solid;
   margin-top: 20px;
+  padding-bottom: 20px;
 }
 .right-block-item a {
   font-size: 14px;
@@ -3933,6 +3934,9 @@ q p:last-of-type {
 }
 .right-block-item .item-left {
   width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .right-block-item .item-left .title {
   font-weight: 900;
