@@ -642,3 +642,26 @@ remove_action('admin_print_styles', 'print_emoji_styles');
 remove_filter('the_content_feed', 'wp_staticize_emoji');
 remove_filter('comment_text_rss', 'wp_staticize_emoji');
 remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+
+
+function studio_format_date_pt($date) {
+
+    $timestamp = strtotime($date);
+
+    $months = [
+        1 => 'janeiro',
+        2 => 'fevereiro',
+        3 => 'março',
+        4 => 'abril',
+        5 => 'maio',
+        6 => 'junho',
+        7 => 'julho',
+        8 => 'agosto',
+        9 => 'setembro',
+        10 => 'outubro',
+        11 => 'novembro',
+        12 => 'dezembro'
+    ];
+
+    return date('d', $timestamp) . ' de ' . $months[(int) date('m', $timestamp)];
+}

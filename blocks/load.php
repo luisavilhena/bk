@@ -21,5 +21,7 @@
 	require('carousel-mini.php');
 
 	require('midia.php');
+	require('event.php');
+	require('blog.php');
 
 ?>

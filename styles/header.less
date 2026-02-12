@@ -46,6 +46,8 @@ header {
 				margin-right: 30px;
 			}
 	}
+
+	  
 }
 
 @media screen and (max-width: 1080px) {
@@ -109,4 +111,30 @@ header {
 		text-decoration: none;
 		color: #ffffff;
 	}
+}
+
+.trp-language-switcher {
+	top: 15px !important;
+	right: 20px !important;
+}
+.trp-floating-switcher {
+	box-shadow: unset !important;
+	font-family: 'Inter', sans-serif;
+	font-size: 16px;
+}
+.trp-language-item {
+	padding-right: 4px !important;
+	padding-left: 4px !important;
+}
+.language-switcher.only-mobile{
+	display: none;
+}
+@media screen and (max-width: 1080px) {
+	.trp-language-switcher {
+		display: none !important;
+	}
+	.language-switcher.only-mobile {
+		display: block;
+	}
+	
 }

@@ -87,13 +87,6 @@
               'menu_id'        => 'main-menu',
             ));
           ?>
-          <?php 
-            // if (is_archive()) {
-            //     echo '<div id="menu-filter">Filtrar por 
-            //     <img id="open-filter"alt="abrir filtro" src="'.get_template_directory_uri().'/resources/icons/seta-top.png">
-            //     </div>';
-            // }
-          ?>
           <div class="only-mobile">
 
           	<ul class="social-media">
@@ -156,22 +149,8 @@
 
                     </ul>
                   </div>
-
-
-
-
-
-
-
-
-
-
-
-          <!-- <a
-            class="cc-menu-search link link--icon-lg"
-            href="<?php echo get_home_url(); ?>?s=">
-          </a> -->
         </nav>
+
       </div>
     </div> 
 	</header>
