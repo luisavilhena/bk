@@ -95,7 +95,7 @@ function bk_equipe_block() {
                 data-subtitle="<?= esc_attr($member['subtitle']); ?>"
                 data-bio="<?= esc_attr($member['bio']); ?>"
             >
-                <?= wp_get_attachment_image($member['image'], 'medium'); ?>
+                <?= wp_get_attachment_image($member['image'], 'full'); ?>
             </div>
         <?php endforeach; ?>
     </div>
