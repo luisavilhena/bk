@@ -203,7 +203,7 @@ function render_filter_block($args) {
                         data-text="Nenhuma seleção"
                         data-filter="<?php echo esc_attr($slug); ?>"
                         data-term-id="">
-                        Nenhuma seleção
+                        Todos
                     </li>
 
                     <?php foreach ($terms as $term) :
@@ -260,7 +260,7 @@ function render_single_filter_block($args) {
                 <div class="selections">
                     <div>
                         <span class="category">
-                            Galeria de fotos
+                            Visualização
                             <?php echo $svg_path; ?>
                         </span>
 
@@ -272,7 +272,7 @@ function render_single_filter_block($args) {
                             </li>
                             <li
                                 class="category-list-item-2">
-                                <a href="<?php echo esc_url( get_permalink( get_page_by_path('projetos') ) ); ?>">Galeria de fotos</a>
+                                <a href="<?php echo esc_url( get_permalink( get_page_by_path('projetos') ) ); ?>">Galeria</a>
                             </li>
                         </ul>
 

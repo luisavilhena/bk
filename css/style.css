@@ -2816,6 +2816,16 @@ footer .footer-about a {
   display: block;
   object-fit: cover;
 }
+.home .home-content a:last-of-type,
+.page-template-page-tempo .home-content a:last-of-type,
+.menu-open .home-content a:last-of-type {
+  height: calc(100vh - 60px);
+}
+.home .home-content a:last-of-type img,
+.page-template-page-tempo .home-content a:last-of-type img,
+.menu-open .home-content a:last-of-type img {
+  height: calc(100vh - 60px);
+}
 .home .home-content figure,
 .page-template-page-tempo .home-content figure,
 .menu-open .home-content figure {

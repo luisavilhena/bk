@@ -64,6 +64,44 @@ function bk_equipe_block() {
             <?= wp_get_attachment_image($block['hero_image'], 'full'); ?>
         </div>
     </div>
+        <!-- ===== LINHA 3 – GRID 2 ===== -->
+        <div class="equipe-grid grid-2">
+
+<div class="col-left equipe-info default">
+
+    <div class="info-default">
+        <h3 class="info-title-default">
+            <?= esc_html($block['highlight_title']); ?>
+        </h3>
+    </div>
+
+    <div class="info-hover">
+        <div class="info-top">
+            <h3 class="info-title"></h3>
+            <p class="info-subtitle"></p>
+        </div>
+        <div class="info-bottom info-bio"></div>
+    </div>
+
+ </div>
+
+
+<div class="col-right">
+    <div class="grid">
+        <?php foreach ($block['team_highlights'] as $member): ?>
+            <div
+                class="member"
+                data-title="<?= esc_attr($member['title']); ?>"
+                data-subtitle="<?= esc_attr($member['subtitle']); ?>"
+                data-bio="<?= esc_attr($member['bio']); ?>"
+            >
+                <?= wp_get_attachment_image($member['image'], 'medium'); ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+</div>
 
     <!-- ===== LINHA 2 – GRID 3 ===== -->
     <div class="equipe-grid grid-3">
@@ -86,45 +124,6 @@ function bk_equipe_block() {
                         data-bio="<?= esc_attr($member['bio']); ?>"
                     >
                         <?= wp_get_attachment_image($member['image'], 'full'); ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- ===== LINHA 3 – GRID 2 ===== -->
-    <div class="equipe-grid grid-2">
-
-        <div class="col-left equipe-info default">
-
-            <div class="info-default">
-                <h3 class="info-title-default">
-                    <?= esc_html($block['highlight_title']); ?>
-                </h3>
-            </div>
-
-            <div class="info-hover">
-                <div class="info-top">
-                    <h3 class="info-title"></h3>
-                    <p class="info-subtitle"></p>
-                </div>
-                <div class="info-bottom info-bio"></div>
-            </div>
-
-         </div>
-
-
-        <div class="col-right">
-            <div class="grid">
-                <?php foreach ($block['team_highlights'] as $member): ?>
-                    <div
-                        class="member"
-                        data-title="<?= esc_attr($member['title']); ?>"
-                        data-subtitle="<?= esc_attr($member['subtitle']); ?>"
-                        data-bio="<?= esc_attr($member['bio']); ?>"
-                    >
-                        <?= wp_get_attachment_image($member['image'], 'medium'); ?>
                     </div>
                 <?php endforeach; ?>
             </div>
