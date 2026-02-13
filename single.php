@@ -1,6 +1,10 @@
 <?php
 
 get_header(); ?>
+<?php 
+$current_url = $_SERVER['REQUEST_URI'];
+$is_en = strpos($current_url, '/en/') !== false;
+?>
 <?php
     $next_project = get_previous_post();
 
@@ -21,7 +25,7 @@ get_header(); ?>
 } else {
     $next_link  = get_permalink( $next_project );
     $next_title = get_the_title( $next_project );
-    }
+}
 ?>
 
 
@@ -43,6 +47,7 @@ get_header(); ?>
 			<?php
 				$descricao = get_field('descricao_do_projeto');
 				$especificidade = get_field('especificidade_projeto');
+                $download = get_field('download');
 				?>
 				<div class="descricao-do-projeto">
 				<?php echo wp_kses_post( $descricao ); ?>
@@ -52,15 +57,34 @@ get_header(); ?>
 
                     if ($paragraph_count > 1) :
                     ?>
-                        <div class="toggle-descricao">Ler mais</div>
+                        <div class="toggle-descricao"
+                        data-more="<?php echo $is_en ? 'Read more' : 'Ler mais'; ?>"
+                        data-less="<?php echo $is_en ? 'Read less' : 'Ler menos'; ?>">
+                        
+                        <?php echo $is_en ? 'Read more' : 'Ler mais'; ?>
+                        </div>
                     <?php endif; ?>
 				</div>
 				<div id="especificidade-projeto" class="especificidade-projeto">
 					<?php echo wp_kses_post( $especificidade ); ?>
 				</div>
+
+                <?php if ( ! empty($download) ) : ?>
+                    <a 
+                        id="download-projeto" 
+                        class="download-projeto" 
+                        href="<?php echo esc_url( $download ); ?>" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                    >
+                        <?php echo $is_en ? 'Project download ↘' : 'Faça download do projeto ↘'; ?>
+                    </a>
+                <?php endif; ?>
+
+
 				<?php if ( isset( $next_link ) ) : ?>
 					<a href="<?php echo esc_url( $next_link ); ?>" id="next-project"class="next-project">
-						Próximo projeto →
+                        <?php echo $is_en ? 'Next project →' : 'Próximo projeto →'; ?>
 					</a>
 				<?php endif; ?>
 		</div>

@@ -31,12 +31,17 @@ document.querySelectorAll('nav a').forEach(link => {
 //ler mais single projetos
 document.querySelectorAll('.toggle-descricao').forEach(button => {
 	button.addEventListener('click', () => {
+  
 	  const container = button.closest('.descricao-do-projeto');
 	  const isOpen = container.classList.toggle('is-open');
   
-	  button.textContent = isOpen ? 'Ler menos' : 'Ler mais';
+	  const textMore = button.dataset.more;
+	  const textLess = button.dataset.less;
+  
+	  button.textContent = isOpen ? textLess : textMore;
 	});
-});
+  });
+  
   
   
 

@@ -1962,7 +1962,6 @@ footer .footer-about a {
   flex-direction: column;
   background-color: white;
   display: flex;
-  flex-wrap: wrap;
   overflow: hidden;
   max-height: 0;
   left: -5px;
@@ -3018,10 +3017,13 @@ footer .footer-about a {
   max-height: calc(100vh - 215px);
 }
 #single-projetos .especificidade-projeto {
-  margin-bottom: 55px;
+  margin-bottom: 20px;
 }
 #single-projetos .especificidade-projeto p:last-of-type {
   margin-bottom: 0;
+}
+#single-projetos .download-projeto {
+  margin-bottom: 55px;
 }
 #single-projetos .descricao-do-projeto p:not(:first-of-type) {
   display: none;
@@ -3079,7 +3081,7 @@ footer .footer-about a {
     bottom: 0;
   }
   #single-projetos .especificidade-projeto {
-    margin-bottom: 0px;
+    margin-bottom: 20px;
   }
   #single-projetos .mobile-footer {
     display: flex;
