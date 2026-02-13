@@ -43,12 +43,17 @@ get_header(); ?>
 			<?php
 				$descricao = get_field('descricao_do_projeto');
 				$especificidade = get_field('especificidade_projeto');
-
-				if ( $descricao ) :
 				?>
 				<div class="descricao-do-projeto">
-					<?php echo wp_kses_post( $descricao ); ?>
-					<div class="toggle-descricao">Ler mais</div>
+				<?php echo wp_kses_post( $descricao ); ?>
+                <?php
+                    preg_match_all('/<p\b[^>]*>/i', $descricao, $matches);
+                    $paragraph_count = count($matches[0]);
+
+                    if ($paragraph_count > 1) :
+                    ?>
+                        <div class="toggle-descricao">Ler mais</div>
+                    <?php endif; ?>
 				</div>
 				<div id="especificidade-projeto" class="especificidade-projeto">
 					<?php echo wp_kses_post( $especificidade ); ?>
@@ -58,7 +63,6 @@ get_header(); ?>
 						Próximo projeto →
 					</a>
 				<?php endif; ?>
-			<?php endif; ?>
 		</div>
 		<div id="column-right" class="column-right">
 				<?php the_content(); ?> 
