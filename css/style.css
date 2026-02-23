@@ -1787,6 +1787,10 @@ footer .footer-about a {
     padding: 0;
   }
 }
+.filter #filtro-categorias .blocos .bloco .selections #select-premiado .sibling,
+.filter #filtro-categorias .blocos .bloco .selections #select-premiado {
+  width: 80px;
+}
 .filter {
   z-index: 10000;
   position: fixed;
@@ -2016,12 +2020,24 @@ footer .footer-about a {
   color: white;
   transition: all 0.3s;
 }
-@media screen and (max-width: 1330px) {
+@media screen and (max-width: 1421px) {
   .filter #filtro-categorias .blocos .bloco .selections {
-    margin-right: 1vw;
+    margin-right: 10px;
   }
   #filtro-categorias .blocos .bloco .category svg {
-    margin-left: 2px;
+    margin-left: 0px;
+  }
+  .filter #filtro-categorias .blocos .bloco .selections #select-premiado .sibling,
+  .filter #filtro-categorias .blocos .bloco .selections #select-premiado {
+    width: 70px;
+  }
+}
+@media screen and (max-width: 1330px) {
+  .filter #filtro-categorias .blocos .bloco .selections {
+    margin-right: 6px;
+  }
+  #filtro-categorias .blocos .bloco .category svg {
+    margin-left: 1px;
   }
 }
 @media screen and (max-width: 1127px) {
@@ -2125,6 +2141,9 @@ footer .footer-about a {
   opacity: 0.5;
   pointer-events: none;
   /* evita clicar de novo */
+}
+.clear-all a {
+  text-decoration: none;
 }
 #load-more {
   background-color: transparent;

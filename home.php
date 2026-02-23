@@ -17,6 +17,9 @@ $decada    = $filters['decada'];
 $escala    = $filters['escala'];
 $premiado  = $filters['premiado'];
 
+$active_filters = array_filter($filters);
+$active_count   = count($active_filters);
+
 foreach ($filters as $filter_value) {
     if ($filter_value) {
         $term_args['tax_query'][] = [
@@ -31,6 +34,20 @@ foreach ($filters as $filter_value) {
 $search_query   = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
 $posts_per_page = 12;
 $paged          = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
+
+$has_active_filters = false;
+
+foreach (['tipologia','local','fase','decada','escala','premiado'] as $key) {
+    if (!empty($_GET[$key])) {
+        $has_active_filters = true;
+        break;
+    }
+}
+
+if (!empty($_GET['s'])) {
+    $has_active_filters = true;
+}
+
 
 // base da query
 $args = [
@@ -83,69 +100,50 @@ $all_terms = get_terms(array(
 $filter_status = array();
 
 foreach ($all_terms as $term) {
-    $term_args = array(
-        'post_type' => 'post',
+
+    // 🔥 RESETAR SEMPRE
+    $term_args = [
+        'post_type'   => 'post',
         'post_status' => 'publish',
-        's' => $search_query,
-        'tax_query' => array('relation' => 'AND'),
-    );
+        's'           => $search_query,
+        'tax_query'   => ['relation' => 'AND'],
+    ];
 
-    if ($tipologia) {
-        $term_args['tax_query'][] = array(
+    $term_parent_id = $term->parent;
+
+    foreach ($filters as $slug => $value) {
+
+        if (!$value) continue;
+
+        $parent_term = get_term_by('slug', $slug, 'category');
+        if (!$parent_term) continue;
+
+        // 🔥 REGRA CORRETA:
+        // Se só existe 1 filtro ativo
+        // e estamos avaliando termo da mesma categoria mãe
+        // permitir troca
+        if (
+            $active_count === 1 &&
+            $parent_term->term_id === $term_parent_id
+        ) {
+            continue;
+        }
+
+        $term_args['tax_query'][] = [
             'taxonomy' => 'category',
             'field'    => 'term_id',
-            'terms'    => $tipologia,
-        );
-    }
-
-    if ($local) {
-        $term_args['tax_query'][] = array(
-            'taxonomy' => 'category',
-            'field'    => 'term_id',
-            'terms'    => $local,
-        );
-    }
-
-    if ($fase) {
-        $term_args['tax_query'][] = array(
-            'taxonomy' => 'category',
-            'field'    => 'term_id',
-            'terms'    => $fase,
-        );
-    }
-
-    if ($decada) {
-        $term_args['tax_query'][] = array(
-            'taxonomy' => 'category',
-            'field'    => 'term_id',
-            'terms'    => $decada,
-        );
-    }
-
-    if ($escala) {
-        $term_args['tax_query'][] = array(
-            'taxonomy' => 'category',
-            'field'    => 'term_id',
-            'terms'    => $escala,
-        );
-    }
-
-    if ($premiado) {
-        $term_args['tax_query'][] = array(
-            'taxonomy' => 'category',
-            'field'    => 'term_id',
-            'terms'    => $premiado,
+            'terms'    => $value,
             'include_children' => false,
-        );
+        ];
     }
 
-    // 👉 Aqui SIM entra o termo sendo avaliado
-    $term_args['tax_query'][] = array(
+    // adiciona o termo sendo avaliado
+    $term_args['tax_query'][] = [
         'taxonomy' => 'category',
         'field'    => 'term_id',
         'terms'    => $term->term_id,
         'include_children' => false,
-    );
+    ];
 
     $term_query = new WP_Query($term_args);
 
@@ -315,7 +313,17 @@ function render_single_filter_block($args) {
                     'slug' => 'premiado'
                 ]);
                 ?>
+                                <?php if ($has_active_filters) : ?>
+                    <div class="selections clear-all-wrapper">
+                        <div class="clear-all">
+                            <a href="<?php echo esc_url( home_url('/projetos/') ); ?>">
+                                x Limpar filtros
+                            </a>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 </div>
+
             </div>
             <div>
         </div>
@@ -460,9 +468,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
-
 document.addEventListener('DOMContentLoaded', function () {
 
+        const clearBtn = document.querySelector('.category-list-item:not(.clear-all)');
+        if (!clearBtn) return;
+
+        clearBtn.addEventListener('click', function () {
+            console.log('clicou')
+            window.location.href = window.location.pathname;
+        });
+
+});
+document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.category-list-item').forEach(item => {
         item.addEventListener('click', function (e) {
             e.preventDefault();
