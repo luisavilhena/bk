@@ -41,8 +41,8 @@ document.querySelectorAll('.toggle-descricao').forEach(button => {
 	  button.textContent = isOpen ? textLess : textMore;
 	});
   });
-  
-  
+
+
   
 
 
@@ -292,10 +292,39 @@ jQuery(function ($) {
   
   
   
+  $(window).on('load', function(){
+
+	$('.home-content').slick({
+		vertical: true,
+		verticalSwiping: true,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		speed: 800,
+		cssEase: 'ease',
+		arrows: false,
+		dots: false,
+		infinite: false,
+		adaptiveHeight: false
+	});
   
+
+	$('.home-content').on('wheel', function(e){
+
+		e.preventDefault();
+	  
+		if(e.originalEvent.deltaY < 0){
+			$(this).slick('slickPrev');
+		} else {
+			$(this).slick('slickNext');
+		}
+	  
+	  });
+  
+  });
   
   
 jQuery(function ($) {
+	
 
     $('.publicacoes-list').each(function () {
         const $list = $(this);
@@ -305,11 +334,12 @@ jQuery(function ($) {
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 autoplay: false,
-                speed: 2000,
-                autoplaySpeed: 2000,
+                speed: 1000,
+                autoplaySpeed: 1000,
                 dots: false,
 				variableWidth: true,
 				infinite: false,
+				arrows: true,
 
 
             });
@@ -965,3 +995,74 @@ document.querySelectorAll('#timeline-page .text h2').forEach(el => {
 	  .join(' ');
   });
   
+    
+  //fancybox
+  document.addEventListener("DOMContentLoaded", function () {
+
+	document.querySelectorAll(".publicacao-item").forEach(function (post) {
+  
+	  const trigger = post.querySelector(".publicacao-thumb");
+	  const links   = post.querySelectorAll(".publicacao-extra-galeria a");
+  
+	  if (!trigger || !links.length) return;
+  
+	  trigger.addEventListener("click", function (e) {
+		e.preventDefault();
+  
+		const items = Array.from(links).map(link => ({
+		  src: link.href,
+		  type: "image",
+		  caption: link.dataset.caption || ""
+		}));
+  
+		Fancybox.show(items, {
+		  Carousel: { 
+			infinite: false,
+			Thumbs: false,
+
+		 },
+		});
+  
+		// Monitorar manualmente
+		const checkInterval = setInterval(() => {
+  
+		  const instance = Fancybox.getInstance();
+		  if (!instance) {
+			clearInterval(checkInterval);
+			return;
+		  }
+  
+		  const slide = instance.getSlide();
+		  if (!slide) return;
+  
+		  const lastIndex = items.length - 1;
+  
+		  if (slide.index === lastIndex) {
+  
+			console.log("Último slide detectado");
+			clearInterval(checkInterval);
+			const nextBtn = document.querySelector(".is-next");
+			console.log(nextBtn)
+
+  
+			// Fechar após pequeno delay
+			setTimeout(() => {
+			  if (Fancybox.getInstance()) {
+				console.log("Fechando modal");
+				if (nextBtn) {
+				console.log("Removendo botão next");
+				nextBtn.style.display = "none";
+				}
+			  }
+			}, 100);
+  
+		  }
+  
+		}, 150);
+  
+	  });
+  
+	});
+  
+  });
+

@@ -54,18 +54,39 @@ foreach ($terms as $term) :
                             <!-- IMAGEM -->
                             <?php if (has_post_thumbnail()) : ?>
                                 <div class="publicacao-thumb">
-                                <div class="normal">
-                                <a
-                                    href="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>"
-                                    class="publicacao-lightbox-trigger"
-                                    data-group="<?php echo esc_attr($term->term_id); ?>"
-                                >
-                                    <?php the_post_thumbnail('medium_large'); ?>
-                                </a>
-                                </div>
+                                    <div class="normal">
+                                    <a href="#" class="open-galeria">
+                                        <?php the_post_thumbnail('medium_large'); ?>
+                                    </a>
+                                    </div>
                                     <div class="hover">
                                         <?php the_content(); ?>
                                     </div>
+                                    <?php
+                                    $galeria = carbon_get_the_post_meta('publicacao_galeria');
+
+                                    if (!empty($galeria)) :
+                                    ?>
+                                        <div class="publicacao-extra-galeria">
+                                            <?php foreach ($galeria as $item) :
+
+                                                $img_id = $item['imagem'];
+                                                $full   = wp_get_attachment_image_url($img_id, 'full');
+                                                $thumb  = wp_get_attachment_image($img_id, 'medium_large');
+                                                $caption = esc_attr($item['legenda']);
+                                            ?>
+
+                                                <a 
+                                                    href="<?php echo esc_url($full); ?>"
+                                                    data-fancybox="post-<?php the_ID(); ?>"
+                                                    data-caption="<?php echo $caption; ?>"
+                                                >
+                                                    <?php echo $thumb; ?>
+                                                </a>
+
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="text">
                                     <h2><?php the_title(); ?></h2>

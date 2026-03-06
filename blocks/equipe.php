@@ -12,9 +12,10 @@ function bk_equipe_block() {
             /* =====================
                LINHA 1 – HERO
             ===================== */
-            Field::make('text', 'hero_title', 'Título da equipe'),
+            Field::make('text', 'hero_title', 'Título da equipe toda'),
             Field::make('text', 'hero_subtitle', 'Subtítulo'),
             Field::make('image', 'hero_image', 'Imagem da equipe'),
+            Field::make('text', 'hero_title_alone', 'Título da equipe individual'),
 
             /* =====================
                LINHA 2 – GRID 3
@@ -67,11 +68,50 @@ function bk_equipe_block() {
         <!-- ===== LINHA 3 – GRID 2 ===== -->
         <div class="equipe-grid grid-2">
 
+            <div class="col-left equipe-info default">
+
+                <div class="info-default">
+                    <h3 class="info-title-default">
+                        <?= esc_html($block['highlight_title']); ?>
+                    </h3>
+                </div>
+
+                <div class="info-hover">
+                    <div class="info-top">
+                        <h3 class="info-title"></h3>
+                        <p class="info-subtitle"></p>
+                    </div>
+                    <div class="info-bottom info-bio"></div>
+                </div>
+
+            </div>
+
+
+            <div class="col-right">
+                <div class="grid">
+                    <?php foreach ($block['team_highlights'] as $member): ?>
+                        <div
+                            class="member"
+                            data-title="<?= esc_attr($member['title']); ?>"
+                            data-subtitle="<?= esc_attr($member['subtitle']); ?>"
+                            data-bio="<?= esc_attr($member['bio']); ?>"
+                        >
+                            <?= wp_get_attachment_image($member['image'], 'full'); ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+        </div>
+
+    <!-- ===== LINHA 2 – GRID 3 ===== -->
+    <div class="equipe-grid grid-3">
+
 <div class="col-left equipe-info default">
 
     <div class="info-default">
         <h3 class="info-title-default">
-            <?= esc_html($block['highlight_title']); ?>
+            <?= esc_html($block['hero_title_alone']); ?>
         </h3>
     </div>
 
@@ -83,12 +123,11 @@ function bk_equipe_block() {
         <div class="info-bottom info-bio"></div>
     </div>
 
- </div>
-
+</div>
 
 <div class="col-right">
     <div class="grid">
-        <?php foreach ($block['team_highlights'] as $member): ?>
+        <?php foreach ($block['team_members'] as $member): ?>
             <div
                 class="member"
                 data-title="<?= esc_attr($member['title']); ?>"
@@ -102,34 +141,6 @@ function bk_equipe_block() {
 </div>
 
 </div>
-
-    <!-- ===== LINHA 2 – GRID 3 ===== -->
-    <div class="equipe-grid grid-3">
-
-        <div class="col-left equipe-info">
-            <div class="info-top">
-                <h3 class="info-title"></h3>
-                <p class="info-subtitle"></p>
-            </div>
-            <div class="info-bottom info-bio"></div>
-        </div>
-
-        <div class="col-right">
-            <div class="grid">
-                <?php foreach ($block['team_members'] as $member): ?>
-                    <div
-                        class="member"
-                        data-title="<?= esc_attr($member['title']); ?>"
-                        data-subtitle="<?= esc_attr($member['subtitle']); ?>"
-                        data-bio="<?= esc_attr($member['bio']); ?>"
-                    >
-                        <?= wp_get_attachment_image($member['image'], 'full'); ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-
-    </div>
 
 </section>
 <!-- ================= MOBILE ================= -->

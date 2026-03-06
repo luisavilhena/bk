@@ -43,6 +43,11 @@ $fields = [
     'home_8',
     'home_9',
     'home_10',
+    'home_11',
+    'home_12',
+    'home_13',
+    'home_14',
+    'home_15',
 ];
 
 $blocks = [];
@@ -60,6 +65,7 @@ foreach ( $fields as $field ) {
 
 shuffle( $blocks );
 $blocks = array_slice( $blocks, 0, 5 );
+
 
 /* ============================
    RENDERIZA

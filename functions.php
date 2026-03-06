@@ -665,3 +665,19 @@ function studio_format_date_pt($date) {
 
     return date('d', $timestamp) . ' de ' . $months[(int) date('m', $timestamp)];
 }
+
+
+add_action('carbon_fields_register_fields', function() {
+
+    Container::make('post_meta', 'Galeria da Publicação')
+        ->where('post_type', '=', 'publicacoes')
+        ->add_fields([
+            Field::make('complex', 'publicacao_galeria', 'Imagens da Galeria')
+                ->add_fields([
+                    Field::make('image', 'imagem', 'Imagem')
+                        ->set_value_type('id'),
+                    Field::make('text', 'legenda', 'Legenda')
+                ])
+        ]);
+
+});

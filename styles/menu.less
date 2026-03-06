@@ -1,3 +1,9 @@
+.blog {
+	ul#main-menu > li:hover ul.sub-menu {
+		display: none;
+	}
+
+}
 .header-menu-container {
 	display: flex;
     justify-content: space-between;
@@ -65,6 +71,7 @@ ul#main-menu {
 		}
 	}
 
+
 	> li {
 		position: relative;
 		display: flex;
@@ -73,6 +80,33 @@ ul#main-menu {
 		padding-bottom: 0px;
 		margin-top: 0px;
 		margin-bottom: 0;
+		&:hover {
+			ul.sub-menu {
+				display: flex;
+				flex-direction: column;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				width: 130px;
+				padding-top: 25px;
+				li {
+					margin-bottom: 0;
+					a {
+						font-weight: 300;
+						text-decoration: none;
+						padding-bottom: 15px;
+						&:hover {
+							font-weight: 900;
+						}
+						&:hover::before {
+							display: none;
+						}
+					}
+				}
+				
+			}
+			
+		}
 		> a {
 			position: relative;
 			text-decoration: none;
@@ -220,15 +254,41 @@ ul#main-menu {
 					li {
 						padding: 0;
 						margin: 0;
+						flex-direction: column;
 						a {
 							border-top: 1px solid #ffffff;
 							padding: 15px 15px;
 							color: white;
-							width: 100%;
+							// width: 100%;
 							text-align: right;
 							font-size: 21px;
+							text-decoration: none;
+							text-transform: uppercase;
 							&::before {
 								display: none;
+							}
+						}
+						&:hover {
+							> ul {
+								padding-top: 0;
+								display: block;
+								position: relative;
+								width: unset;
+								li {
+									a {
+										width: auto;
+									}
+								}
+							}
+						}
+						> ul {
+							display: block;
+							position: relative;
+							li {
+								a {
+									width: auto;
+
+								}
 							}
 						}
 					}				
