@@ -5,9 +5,6 @@ use Carbon_Fields\Field;
 add_action('carbon_fields_register_fields', 'bk_equipe_block');
 
 function bk_equipe_block() {
-$current_url = $_SERVER['REQUEST_URI'];
-$is_en = strpos($current_url, '/en/') !== false;
-
 
     Block::make('Equipe')
         ->add_fields([
@@ -97,7 +94,7 @@ $is_en = strpos($current_url, '/en/') !== false;
                             class="member"
                             data-title="<?= esc_attr($member['title']); ?>"
                             data-subtitle="<?= esc_attr($member['subtitle']); ?>"
-                            data-bio="<?= esc_attr( wp_strip_all_tags($member['bio']) ); ?>"
+                            data-bio="<?= esc_attr($member['bio']); ?>"
                         >
                             <?= wp_get_attachment_image($member['image'], 'full'); ?>
                         </div>
@@ -135,7 +132,7 @@ $is_en = strpos($current_url, '/en/') !== false;
                 class="member"
                 data-title="<?= esc_attr($member['title']); ?>"
                 data-subtitle="<?= esc_attr($member['subtitle']); ?>"
-                data-bio="<?= esc_attr( wp_strip_all_tags($member['bio']) ); ?>"
+                data-bio="<?= esc_attr($member['bio']); ?>"
             >
                 <?= wp_get_attachment_image($member['image'], 'full'); ?>
             </div>
@@ -223,7 +220,7 @@ $is_en = strpos($current_url, '/en/') !== false;
                         </div>
 
                         <button class="read-more" type="button">
-                            <?php echo $is_en ? 'Read more' : 'Ler mais'; ?>
+                            Leia mais
                         </button>
                     <?php endif; ?>
                     </div>
