@@ -78,7 +78,7 @@ krsort($projects_by_year, SORT_NUMERIC);
                 <div class="selections">
                     <div>
                         <span class="category">
-                            Linha do tempo
+                            Visualização
                             <?php echo $svg_path; ?>
                         </span>
 
@@ -90,7 +90,7 @@ krsort($projects_by_year, SORT_NUMERIC);
                             </li>
                             <li
                                 class="category-list-item is-reset">
-                                <a href="<?php echo esc_url( get_permalink( get_page_by_path('projetos') ) ); ?>">Galeria de fotos </a>
+                                <a href="<?php echo esc_url( get_permalink( get_page_by_path('projetos') ) ); ?>">Galeria</a>
                             </li>
                         </ul>
                     </div>

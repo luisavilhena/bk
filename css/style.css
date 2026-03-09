@@ -64,6 +64,18 @@
 #contato .content .texts .text .icon-arrow {
   font-family: inherit;
 }
+#contato .content .texts .text .link {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+#contato .content .texts .text .link svg {
+  width: 16px;
+  height: 16px;
+}
+#contato .content .texts .text .link p {
+  margin-bottom: 0;
+}
 #contato img {
   width: 100%;
   object-fit: cover;
@@ -1299,7 +1311,7 @@ footer .footer-about a {
 }
 .equipe .equipe-grid.grid-3 .equipe-info {
   background-color: white;
-  z-index: 10000;
+  z-index: 100;
 }
 .equipe .equipe-grid.grid-3 .equipe-info .info-bio {
   background-color: white;
@@ -2442,6 +2454,9 @@ footer .footer-about a {
   width: 0;
   height: 0;
 }
+.archive-publicacoes .publicacao-item {
+  cursor: pointer;
+}
 .archive-publicacoes .publicacao-group {
   display: flex;
   position: relative;
@@ -2469,11 +2484,13 @@ footer .footer-about a {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M8 26L20 14L32 26" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') center / 40px 40px no-repeat;
   transform: rotate(-90deg);
   left: 0;
+  background-color: white;
 }
 .archive-publicacoes .publicacao-group .slick-next {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M8 26L20 14L32 26" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') center / 40px 40px no-repeat;
   transform: rotate(90deg);
   right: 0px;
+  background-color: white;
 }
 .archive-publicacoes .publicacao-group .line {
   position: absolute;
@@ -3139,13 +3156,16 @@ footer .footer-about a {
   max-height: calc(100vh - 215px);
 }
 #single-projetos .especificidade-projeto {
-  margin-bottom: 20px;
+  margin-bottom: 80px;
 }
 #single-projetos .especificidade-projeto p:last-of-type {
   margin-bottom: 0;
 }
 #single-projetos .download-projeto {
   margin-bottom: 55px;
+}
+#single-projetos .download-projeto svg {
+  width: 18px;
 }
 #single-projetos .descricao-do-projeto p:not(:first-of-type) {
   display: none;

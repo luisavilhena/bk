@@ -64,7 +64,7 @@ function midia() {
                         </div>
                         <?php if ($topics['link_internal']) : ?>
                         <div class="btn-container">
-                            <a href="<?php echo esc_url(get_permalink($topics['link_internal'][0]['id'])); ?>" class="btn">
+                            <a href="<?php echo esc_url(get_permalink($topics['link_internal'][0]['id'])); ?>" target="_blank" class="btn">
                                 <?php echo esc_html($topics['btn']); ?>
                             </a>
                         </div> 
