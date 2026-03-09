@@ -208,19 +208,21 @@ function bk_equipe_block() {
                     </div>
                     <div>
 
+                    <?php if (!empty(trim($short))) : ?>
                         <div class="bio-short">
-                            <?= esc_html($short); ?>
+                            <?= wpautop($short); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty(trim($full))) : ?>
+                        <div class="bio-full">
+                            <?= wpautop($full); ?>
                         </div>
 
-                        <?php if (!empty(trim($full))) : ?>
-                            <div class="bio-full">
-                                <?= wpautop($member['bio']); ?>
-                            </div>
-                            <button class="read-more" type="button">
-                                Leia mais
-                            </button>
-
-                        <?php endif; ?>
+                        <button class="read-more" type="button">
+                            Leia mais
+                        </button>
+                    <?php endif; ?>
                     </div>
                     </div>
 
