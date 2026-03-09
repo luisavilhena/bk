@@ -968,7 +968,15 @@ document.querySelectorAll('.equipe-grid .member').forEach(member => {
   
   });
   
-jQuery(function ($) {
+  jQuery(function ($) {
+
+    const isEnglish = window.location.pathname.includes('/en/');
+
+    const readMore = isEnglish ? 'Read more' : 'Leia mais';
+    const readLess = isEnglish ? 'Read less' : 'Leia menos';
+
+    // corrige o texto inicial ao carregar a página
+    $('.read-more').text(readMore);
 
     $('.equipe-mobile').on('click', '.read-more', function () {
 
@@ -977,9 +985,9 @@ jQuery(function ($) {
         $member.toggleClass('open');
 
         if ($member.hasClass('open')) {
-            $(this).text('Leia menos');
+            $(this).text(readLess);
         } else {
-            $(this).text('Leia mais');
+            $(this).text(readMore);
         }
 
     });

@@ -1443,6 +1443,12 @@ footer .footer-about a {
     font-family: 'Inter', sans-serif;
     line-height: 14px;
   }
+  .mobile-member .bio-short p,
+  .mobile-member .bio-full p {
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    line-height: 14px;
+  }
   .mobile-member-image img {
     width: 100%;
     height: unset;
@@ -3162,7 +3168,7 @@ footer .footer-about a {
   margin-bottom: 0;
 }
 #single-projetos .download-projeto {
-  margin-bottom: 55px;
+  margin-bottom: 70px;
 }
 #single-projetos .download-projeto svg {
   width: 18px;

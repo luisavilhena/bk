@@ -3,6 +3,8 @@ use Carbon_Fields\Block;
 use Carbon_Fields\Field;
 
 add_action('carbon_fields_register_fields', 'bk_equipe_block');
+$current_url = $_SERVER['REQUEST_URI'];
+$is_en = strpos($current_url, '/en/') !== false;
 
 function bk_equipe_block() {
 
@@ -220,7 +222,7 @@ function bk_equipe_block() {
                         </div>
 
                         <button class="read-more" type="button">
-                            Leia mais
+                        <?php echo $is_en ? 'Read more' : 'Leia mais'; ?>
                         </button>
                     <?php endif; ?>
                     </div>
