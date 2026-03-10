@@ -78,7 +78,7 @@ $is_en = strpos($current_url, '/en/') !== false;
                         rel="noopener noreferrer"
                     >
                         <?php echo $is_en ? 'Project download' : 'Faça download do projeto '; ?>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M5 5 L19 19 M19 19 L19 11 M19 19 L11 19"
                                 stroke="currentColor"
                                 stroke-width="2"

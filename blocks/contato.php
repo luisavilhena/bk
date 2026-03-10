@@ -28,7 +28,7 @@ function contato() {
                                     <?php echo wp_kses_post($block['content1']); ?>
                                     <div class="link">
                                         <?php echo wp_kses_post($block['link1']); ?>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
                                         <path d="M5 19 L19 5 M19 5 L19 13 M19 5 L11 5"
                                                 stroke="currentColor"
                                                 stroke-width="1"
@@ -38,7 +38,7 @@ function contato() {
                                     </div>
                                     <div class="link">
                                         <?php echo wp_kses_post($block['link2']); ?>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
                                         <path d="M5 19 L19 5 M19 5 L19 13 M19 5 L11 5"
                                                 stroke="currentColor"
                                                 stroke-width="1"
@@ -48,7 +48,7 @@ function contato() {
                                     </div>
                                     <div class="link">
                                         <?php echo wp_kses_post($block['link3']); ?>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
                                         <path d="M5 19 L19 5 M19 5 L19 13 M19 5 L11 5"
                                                 stroke="currentColor"
                                                 stroke-width="1"

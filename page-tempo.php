@@ -103,7 +103,7 @@ krsort($projects_by_year, SORT_NUMERIC);
                 <input type="text" placeholder="Buscar" class="search-field" value="<?php echo get_search_query(); ?>" name="s" />
             </label>
             <button type="submit" class="search-submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none">
+                <svg width="14" height="13" viewBox="0 0 14 13" fill="none">
                 <circle cx="5.5" cy="5.5" r="5" stroke="white"/>
                 <line x1="9.35355" y1="8.64645" x2="13.3536" y2="12.6464" stroke="white"/>
                 </svg>
