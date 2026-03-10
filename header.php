@@ -34,28 +34,21 @@
 />
 
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2NM9XCDK19"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2NM9XCDK19');
+</script>
 	<?php wp_head(); ?>
-  <!-- Google Tag Manager -->
-  <script>
-  (function(w,d,s,l,i){w[l]=w[l]||[];
-  w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-  var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-  j.async=true;
-  j.src='https://www.googletagmanager.com/gtm.js?id=GT-5D485FF8'+dl;
-  f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GT-5D485FF8');
-  </script>
 	
 </head>
 
 
-<body <?php body_class(); ?>
-  data-component="class-toggle"
-  data-class-toggle-target-class="menu-open">
-	<!-- <div id="mobile-menu-overlay"></div> -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GT-5D485FF8"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<body <?php body_class(); ?>>
+
  <header
     id="main-header"
     class="active structure-block"
