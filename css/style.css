@@ -298,7 +298,8 @@
     height: auto;
   }
 }
-.blog ul#main-menu > li:hover ul.sub-menu {
+.blog ul#main-menu > li:hover ul.sub-menu,
+.page-template-page-tempo ul#main-menu > li:hover ul.sub-menu {
   display: none;
 }
 .header-menu-container {
