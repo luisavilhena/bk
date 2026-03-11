@@ -378,7 +378,7 @@ ul#main-menu > li:hover ul.sub-menu {
   top: 100%;
   left: 0;
   width: 130px;
-  padding-top: 25px;
+  padding-top: 10px;
 }
 ul#main-menu > li:hover ul.sub-menu li {
   margin-bottom: 0;
@@ -386,7 +386,7 @@ ul#main-menu > li:hover ul.sub-menu li {
 ul#main-menu > li:hover ul.sub-menu li a {
   font-weight: 300;
   text-decoration: none;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
 }
 ul#main-menu > li:hover ul.sub-menu li a:hover {
   font-weight: 900;
@@ -2488,13 +2488,13 @@ footer .footer-about a {
   pointer-events: none;
 }
 .archive-publicacoes .publicacao-group .slick-prev {
-  background: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40"><path d="M8 26L20 14L32 26" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') center / 40px 40px no-repeat;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M8 26L20 14L32 26" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') center / 40px 40px no-repeat;
   transform: rotate(-90deg);
   left: 0;
   background-color: white;
 }
 .archive-publicacoes .publicacao-group .slick-next {
-  background: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40"><path d="M8 26L20 14L32 26" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') center / 40px 40px no-repeat;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M8 26L20 14L32 26" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') center / 40px 40px no-repeat;
   transform: rotate(90deg);
   right: 0px;
   background-color: white;
