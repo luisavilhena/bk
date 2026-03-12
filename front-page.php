@@ -3,6 +3,7 @@ get_header();
 
 while (have_posts()) : the_post();
 ?>
+<h1 class="visually-hidden"><?php the_title(); ?></h1>
 
 <div class="home-content">
 <?php

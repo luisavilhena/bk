@@ -48,6 +48,7 @@ function midia() {
 			// ob_start();
 			?>
             <div class="midia-container">
+            <h1 class="visually-hidden"><?php the_title(); ?></h1>
                <?php foreach ($block['topics'] as $topics) : 
                 $img_url = '';
                 if (!empty($topics['img'])) {

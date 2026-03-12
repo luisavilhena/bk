@@ -55,6 +55,7 @@ function bk_premios_block() {
         ])
         ->set_render_callback(function ($block) {
             ?>
+            <h1 class="visually-hidden"><?php the_title(); ?></h1>
             <div class="premio-desktop">
                 <div class="premios-grid">
 

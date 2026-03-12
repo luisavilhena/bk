@@ -18,6 +18,7 @@ function contato() {
         ->set_render_callback(function ($block) {
             ?>
             <div id="contato" class="">
+            <h1 class="visually-hidden"><?php the_title(); ?></h1>
                 <div class="columns-container without-height">
                     <div class="column-left"></div>
                     <div class="column-right">

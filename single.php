@@ -32,7 +32,7 @@ $is_en = strpos($current_url, '/en/') !== false;
 <div id="single-projetos"class="single-projetos structure-container structure-container-bigger">
 	<div class="columns-container">
 		<div class="column-left">
-			<h2 class="title"><?php the_title(); ?></h2>
+			<h1 class="title"><?php the_title(); ?></h1>
             <div class="excerpt">
                 <?php
                 $tags = get_the_tags();

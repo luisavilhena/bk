@@ -10,10 +10,10 @@
     <div class="title-fixed">
         <div class="columns-container without-height">
             <div class="column-left">
-                 <h1>Agenda BK</h1>
+                 <h2>Agenda BK</h2>
             </div>
             <div class="column-right">
-                <h2>Blog</h2>
+                <h1>Blog</h1>
             </div>
         </div>
     </div>

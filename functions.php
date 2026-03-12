@@ -1,5 +1,6 @@
 <?php
 
+
 add_action('wp_enqueue_scripts', 'bk');
 function bk() {
     // garante estilos do core
@@ -681,3 +682,5 @@ add_action('carbon_fields_register_fields', function() {
         ]);
 
 });
+
+add_theme_support('title-tag');

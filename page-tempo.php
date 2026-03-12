@@ -70,6 +70,7 @@ if ($query->have_posts()) {
  */
 krsort($projects_by_year, SORT_NUMERIC);
 ?>
+<h1 class="visually-hidden"><?php the_title(); ?></h1>
 <div class="filter">
     <div class="space"></div>
     <div id="filtro-categorias" method="GET">
